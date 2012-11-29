@@ -20,6 +20,6 @@ let g:rainbow_operators = 2
 au FileType c,cpp,objc,objcpp call rainbow#activate()
 ```
 
-I recommend VAM or Vundle for plugin management.
+I recommend [VAM](https://github.com/MarcWeber/vim-addon-manager) or [Vundle](https://github.com/gmarik/vundle) for plugin management.
 
 I thank Luo for being supportive and accepting the operator highlighting idea.
