@@ -9,7 +9,7 @@ I've applied some minor corrections and modifications to it:
 * Changed default colors. Seems good to test with the [mustang colorscheme](https://github.com/flazz/vim-colorschemes/blob/master/colors/mustang.vim).
 * Changed default highlighted operators (now most punctuation) and highlighted braces (added < and >).
 
-Currently, check [this SO answer](http://stackoverflow.com/a/13633152/1000282) to know how angle brackets for templates are being distinguished from relational ones.
+Angle brackets are a hard case to deal with. To distinguish "less than" from "open template argument list" it's assumed that "less than" will always be surrounded by spaces, if not, it will be treated as an open template angle bracket. Even if `<` is surrounded by spaces, there's still some elimination by checking keywords like `template`, `class` and `typename`.
 
 This fork is optimized for C++ highlighting by default.
 
