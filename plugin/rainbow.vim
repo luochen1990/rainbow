@@ -51,7 +51,12 @@ func rainbow#load(...)
     if exists('b:loaded')
         cal rainbow#clear()
     endif
-    let b:loaded = (a:0 < 1) ? [ ['(', ')'], ['\[', '\]'], ['{', '}'], ['[[:space:]<]\@<!<<\@!', '>'] ] : a:1
+    let b:loaded = (a:0 < 1) ? [
+                \ ['(', ')'],
+                \ ['\[', '\]'],
+                \ ['{', '}'],
+                \ ['\v(\_i|template\_s*)@<=\<[<=]@!|\<@<!\<(\_[^[:space:]<=]|\_s*(typename|class)>)@=', '>']
+                \ ] : a:1
     let b:operators = (a:0 < 2) ? '' : a:2
     let str = 'TOP'
     for each in range(1, s:max)
