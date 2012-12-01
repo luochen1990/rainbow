@@ -15,7 +15,7 @@ This fork is optimized for C++ highlighting by default.
 
 Put this on your `.vimrc`:
 
-```VimL
+```vim
 let g:rainbow_operators = 2 
 au FileType c,cpp,objc,objcpp call rainbow#activate()
 ```
