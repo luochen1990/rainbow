@@ -11,7 +11,7 @@ I've applied some minor corrections and modifications to it:
 
 Angle brackets are a hard case to deal with. To distinguish "less than" from "bracket for open template argument list" it's assumed that "less than" will always be surrounded by spaces, if not, it will be treated as an open template angle bracket. Although, even if `<` is surrounded by spaces, there's still some case elimination by checking for the `template` or `operator` keyword for example.
 
-This fork is optimized for C++ highlighting by default.
+This fork is optimized for C++ highlighting in dark colorschemes by default.
 
 Put this on your `.vimrc`:
 
