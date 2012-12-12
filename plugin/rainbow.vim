@@ -88,11 +88,14 @@ func rainbow#load(...)
 endfunc
 
 func rainbow#clear()
-    unlet b:loaded
-    for each in range(0 , s:max)
-        exe 'syn clear lv'.each
-        exe 'syn clear op_lv'.each
-    endfor
+    if exists('b:loaded')
+        unlet b:loaded
+        exe 'syn clear op_lv0'
+        for each in range(1 , s:max)
+            exe 'syn clear lv'.each
+            exe 'syn clear op_lv'.each
+        endfor
+    endif
 endfunc
 
 func rainbow#activate()
@@ -112,6 +115,7 @@ endfunc
 
 func rainbow#inactivate()
     if exists('b:active')
+        exe 'hi clear op_lv0'
         for each in range(1, s:max)
             exe 'hi clear lv'.each.'c'
             exe 'hi clear op_lv'.each.''
