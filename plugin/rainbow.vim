@@ -149,5 +149,4 @@ if exists('g:rainbow_active') && g:rainbow_active
 endif
 
 command! RainbowToggle call rainbow#toggle()
-command! Rainbow call rainbow#toggle()
-
+command! RainbowLoad call rainbow#load()
