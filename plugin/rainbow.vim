@@ -144,7 +144,7 @@ if exists('g:rainbow_active') && g:rainbow_active
             endif
         endfor
     else
-        auto syntax,bufnewfile,bufreadpost * call rainbow#activate()
+        auto syntax,bufnewfile,bufreadpost * call rainbow#load()
     endif 
 endif
 
