@@ -55,7 +55,7 @@ func rainbow#load(...)
                 \ ['(', ')'],
                 \ ['\[', '\]'],
                 \ ['{', '}'],
-                \ ['\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<=]@!|\<@<!\<[[:space:]<=]@!)', '>']
+                \ ['\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<#=]@!|\<@<!\<[[:space:]<#=]@!)', '>']
                 \ ] : a:1
     let b:operators = (a:0 < 2) ? '' : a:2
     let str = 'TOP'
