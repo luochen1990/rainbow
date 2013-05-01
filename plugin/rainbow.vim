@@ -8,7 +8,6 @@
 "    second, add the follow sentences to your .vimrc or _vimrc :
 "
 "            let g:rainbow_active = 1
-"            let g:rainbow_operators = 1
 "
 "    third, restart your vim and enjoy coding.
 "Advanced Configuration:
@@ -18,7 +17,6 @@
 "        e.g. this is an advanced config (add these sentences to your vimrc):
 "
 "            let g:rainbow_active = 1
-"            let g:rainbow_operators = 2
 "       
 "            let g:rainbow_load_separately = [
 "                \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
@@ -41,8 +39,7 @@ let s:guifgs = exists('g:rainbow_guifgs')? g:rainbow_guifgs : [
             \ ]
 
 let s:ctermfgs = exists('g:rainbow_ctermfgs')? g:rainbow_ctermfgs : [
-            \ 'lightblue', 'green', 'yellow', 'darkyellow', 'red',
-            \ 'magenta'
+            \ 'lightblue', 'lightgreen', 'yellow', 'red', 'magenta'
             \ ]
 
 let s:max = has('gui_running')? len(s:guifgs) : len(s:ctermfgs)
@@ -57,15 +54,12 @@ func rainbow#load(...)
                 \ ['{', '}'],
                 \ ['\v%(<operator\_s*)@<!%(%(\_i|template\_s*)@<=\<[<#=]@!|\<@<!\<[[:space:]<#=]@!)', '>']
                 \ ] : a:1
-    let b:operators = (a:0 < 2) ? '' : a:2
+    let b:operators = (a:0 < 2) ? '"\v[{\[(<_"''`#*/>)\]}]@![[:punct:]]|\*/@!|/[/*]@!|\<#@!|#@<!\>"' : a:2
+
     let str = 'TOP'
     for each in range(1, s:max)
         let str .= ',lv'.each
     endfor
-    if b:operators == '' && exists('g:rainbow_operators') && g:rainbow_operators > 0
-        let tmp = ['","' , '"\v[{\[(<_"''`#*/>)\]}]@![[:punct:]]|\*/@!|/[/*]@!|\<#@!|#@<!\>"'] 
-        let b:operators = tmp[min([len(tmp) - 1 , g:rainbow_operators - 1])]
-    endif
 
     if b:operators != ''
         exe 'syn match op_lv0 '.b:operators
