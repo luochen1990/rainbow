@@ -71,7 +71,7 @@ func rainbow#load(...)
         endfor
     endif
 
-    let cmd = 'syn region %s matchgroup=%s start=+%s+ end=+%s+ containedin=%s contains=%s,%s'
+    let cmd = 'syn region %s matchgroup=%s start=+%s+ end=+%s+ containedin=%s contains=%s,%s,@Spell'
     for [left , right] in b:loaded
         for each in range(1, s:max)
             exe printf(cmd, 'lv'.each, 'lv'.each.'c', left, right, 'lv'.(each % s:max + 1), str, 'op_lv'.each)
