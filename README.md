@@ -46,6 +46,8 @@ au FileType c,cpp,objc,objcpp call rainbow#load()
 
 I recommend [VAM](https://github.com/MarcWeber/vim-addon-manager) or [Vundle](https://github.com/gmarik/vundle) for plugin management.
 
-Here's a sample of one [vim session](http://html-bin.appspot.com/aghodG1sLWJpbnIMCxIEUGFnZRih0EMM).
+Here's a sample of one vim session:
+
+<a href="http://i.imgur.com/pcCkFxf.png">![VIM Session](http://i.imgur.com/pcCkFxf.png)</a>
 
 I thank Luo for being supportive and accepting the operator highlighting idea.
