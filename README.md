@@ -56,12 +56,12 @@ let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 ```
 I recommend [VAM](https://github.com/MarcWeber/vim-addon-manager) or [Vundle](https://github.com/gmarik/vundle) for plugin management.
 
-Here's a sample of dark gruvbox vim session:
+Here's a sample of dark [gruvbox](https://github.com/morhetz/gruvbox) vim session:
 
 <a href="http://i.imgur.com/pcCkFxf.png">![Dark VIM Session](http://i.imgur.com/pcCkFxf.png)</a>
 
-and here's light newspaper session:
+and here's light [newspaper](https://github.com/flazz/vim-colorschemes/blob/master/colors/newspaper.vim) session:
 
-<a href=" http://i.imgur.com/CxTulnu.png">![Light VIM Session](http://i.imgur.com/CxTulnu.png)</a>
+<a href="http://i.imgur.com/CxTulnu.png">![Light VIM Session](http://i.imgur.com/CxTulnu.png)</a>
 
 I thank Luo for being supportive and accepting the operator highlighting idea.
