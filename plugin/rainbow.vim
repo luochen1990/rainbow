@@ -1,45 +1,47 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 2.51.1
-"Author: luochen1990, oblitum
-"Last Edited: 2012 Nov 29
-"Simple Configuration:
-"    first, put "rainbow.vim"(this file) to dir vim73/plugin or vimfiles/plugin
-"    second, add the follow sentences to your .vimrc or _vimrc :
-"
-"            let g:rainbow_active = 1
-"
-"    third, restart your vim and enjoy coding.
-"Advanced Configuration:
-"    an advanced configuration allows you to define what parentheses to use 
-"    for each type of file . you can also determine the colors of your 
-"    parentheses by this way (read file vim73/rgb.txt for all named colors) .
-"        e.g. this is an advanced config (add these sentences to your vimrc):
-"
-"            let g:rainbow_active = 1
-"       
-"            let g:rainbow_load_separately = [
-"                \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-"                \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-"                \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-"                \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-"                \ ]
-"       
-"            let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick',]
-"
-"User Command:
-"   :RainbowToggle  --you can use it to toggle this plugin.
-"   :Rainbow        --you can use it to toggle this plugin.
+"Script Version: 2.52
+"Author: luochen1990, Francisco Lopes
+"Last Edited: 2013 Sep 12
 
-
-" read file vim73/rgb.txt for all named colors
+" By default, use rainbow colors copied from gruvbox colorscheme (https://github.com/morhetz/gruvbox).
+" They are generally good for both light and dark colorschemes.
 let s:guifgs = exists('g:rainbow_guifgs')? g:rainbow_guifgs : [
-            \ 'DeepSkyBlue', 'ChartReuse', 'Yellow', 'Coral', 'DeepPink',
-            \ 'Purple'
+            \ '#458588',
+            \ '#b16286',
+            \ '#cc241d',
+            \ '#d65d0e',
+            \ '#458588',
+            \ '#b16286',
+            \ '#cc241d',
+            \ '#d65d0e',
+            \ '#458588',
+            \ '#b16286',
+            \ '#cc241d',
+            \ '#d65d0e',
+            \ '#458588',
+            \ '#b16286',
+            \ '#cc241d',
+            \ '#d65d0e',
             \ ]
 
 let s:ctermfgs = exists('g:rainbow_ctermfgs')? g:rainbow_ctermfgs : [
-            \ 'lightblue', 'lightgreen', 'yellow', 'red', 'magenta'
+            \ 'brown',
+            \ 'Darkblue',
+            \ 'darkgray',
+            \ 'darkgreen',
+            \ 'darkcyan',
+            \ 'darkred',
+            \ 'darkmagenta',
+            \ 'brown',
+            \ 'gray',
+            \ 'black',
+            \ 'darkmagenta',
+            \ 'Darkblue',
+            \ 'darkgreen',
+            \ 'darkcyan',
+            \ 'darkred',
+            \ 'red',
             \ ]
 
 let s:max = has('gui_running')? len(s:guifgs) : len(s:ctermfgs)
@@ -147,7 +149,7 @@ if exists('g:rainbow_active') && g:rainbow_active
         endfor
     else
         au syntax,colorscheme * call rainbow#load()
-    endif 
+    endif
 endif
 
 command! RainbowToggle call rainbow#toggle()
