@@ -140,13 +140,13 @@ if exists('g:rainbow_active') && g:rainbow_active
         let ps = g:rainbow_load_separately
         for i in range(len(ps))
             if len(ps[i]) < 3
-                exe printf('auto syntax,bufnewfile,bufreadpost %s call rainbow#load(ps[%d][1])' , ps[i][0] , i)
+                exe printf('au syntax,colorscheme %s call rainbow#load(ps[%d][1])' , ps[i][0] , i)
             else
-                exe printf('auto syntax,bufnewfile,bufreadpost %s call rainbow#load(ps[%d][1] , ps[%d][2])' , ps[i][0] , i , i)
+                exe printf('au syntax,colorscheme %s call rainbow#load(ps[%d][1] , ps[%d][2])' , ps[i][0] , i , i)
             endif
         endfor
     else
-        auto syntax,bufnewfile,bufreadpost * call rainbow#load()
+        au syntax,colorscheme * call rainbow#load()
     endif 
 endif
 
