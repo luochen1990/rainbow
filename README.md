@@ -6,11 +6,10 @@ I've applied some minor corrections and modifications:
 
 * Operators outside any braces get the last color of the rainbow. Previously, it was being ignored for highlighting.
 * Simplified/corrected logic to define highlighting precedence for braces as higher than for operators. So if you got a brace that's also an operator and you got to the situation that it can match both roles, it'll assume the brace role.
-* Changed default colors. Seems good to test with the [mustang colorscheme](https://github.com/flazz/vim-colorschemes/blob/master/colors/mustang.vim).
 * Changed default highlighted operators (now most punctuation) and highlighted braces (added `<` and `>` for C++).
 * Removed optional highlighting for operators. Now hard enabled.
 * Changed loading autocommand for the events "syntax" and "colorscheme" so that the rainbow gets loaded only when there's syntax being applied and aways after switching colorschemes.
-* Default rainbow colors copied from [gruvbox colorscheme](https://github.com/morhetz/gruvbox) (good for dark and light backgrounds).
+* Changed default colors. Default rainbow colors copied from [gruvbox colorscheme](https://github.com/morhetz/gruvbox) (good for dark and light backgrounds).
 
 Angle brackets are a hard case to deal with. To distinguish "less than" from "bracket for open template argument list" it's assumed that "less than" will always be surrounded by spaces. If not, it'll be treated as an open template's angle bracket (although, still some checking applies for the `template` or `operator` keyword, for example).
 
