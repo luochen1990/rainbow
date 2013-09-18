@@ -46,7 +46,7 @@ let s:ctermfgs = exists('g:rainbow_ctermfgs')? g:rainbow_ctermfgs : [
 
 let s:max = has('gui_running')? len(s:guifgs) : len(s:ctermfgs)
 
-func rainbow#load(...)
+func! rainbow#load(...)
     if exists('b:loaded')
         cal rainbow#clear()
     endif
@@ -91,7 +91,7 @@ func rainbow#load(...)
     cal rainbow#activate()
 endfunc
 
-func rainbow#clear()
+func! rainbow#clear()
     if exists('b:loaded')
         unlet b:loaded
         exe 'syn clear op_lv0'
@@ -102,7 +102,7 @@ func rainbow#clear()
     endif
 endfunc
 
-func rainbow#activate()
+func! rainbow#activate()
     if !exists('b:loaded')
         cal rainbow#load()
     endif
@@ -117,7 +117,7 @@ func rainbow#activate()
     let b:active = 'active'
 endfunc
 
-func rainbow#inactivate()
+func! rainbow#inactivate()
     if exists('b:active')
         exe 'hi clear op_lv0'
         for each in range(1, s:max)
@@ -129,7 +129,7 @@ func rainbow#inactivate()
     endif
 endfunc
 
-func rainbow#toggle()
+func! rainbow#toggle()
     if exists('b:active')
         cal rainbow#inactivate()
     else
