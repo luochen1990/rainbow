@@ -58,10 +58,10 @@ I recommend [VAM](https://github.com/MarcWeber/vim-addon-manager) or [Vundle](ht
 
 Here's a sample of a dark [gruvbox](https://github.com/morhetz/gruvbox) vim session:
 
-<a href="http://i.imgur.com/pcCkFxf.png">![Dark VIM Session](http://i.imgur.com/pcCkFxf.png)</a>
+<a href="http://i.imgur.com/J67VbFM.png">![Dark VIM Session](http://i.imgur.com/J67VbFM.png)</a>
 
-and here's a light [newspaper](https://github.com/flazz/vim-colorschemes/blob/master/colors/newspaper.vim) session:
+and here's a slightly lighter [dark solarized](https://github.com/flazz/vim-colorschemes/blob/master/colors/solarized.vim) session:
 
-<a href="http://i.imgur.com/CxTulnu.png">![Light VIM Session](http://i.imgur.com/CxTulnu.png)</a>
+<a href="http://i.imgur.com/j4g6L92.png">![Lighter VIM Session](http://i.imgur.com/j4g6L92.png)</a>
 
 I thank Luo for being supportive and accepting the operator highlighting idea.
