@@ -154,3 +154,4 @@ endif
 
 command! RainbowToggle call rainbow#toggle()
 command! RainbowLoad call rainbow#load()
+command! RainbowClear call rainbow#clear()
