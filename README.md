@@ -1,67 +1,63 @@
-#Rainbow Parentheses Improved
+Rainbow Parentheses Improved 
+===
+>	help you read complex code by showing diff level of parentheses in diff color !! 
 
-This is a fork of [Rainbow Parentheses Improved](http://www.vim.org/scripts/script.php?script_id=4176) by [luo chen](http://www.vim.org/account/profile.php?user_id=53618).
+description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/ori/README_zh.md)
+-------------------------------------------------------------------------------------------------------- 
 
-I've applied some minor corrections and modifications:
+As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses. 
+This plugin will help you read these codes by showing different levels of parentheses in different colors. 
+**See the effect [here](http://vim.wikia.com/wiki/Script:4176)**.
+you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts/script.php?script_id=4176)**.
 
-* Operators outside any braces get the last color of the rainbow. Previously, it was being ignored for highlighting.
-* Simplified/corrected logic to define highlighting precedence for braces as higher than for operators. So if you got a brace that's also an operator and you got to the situation that it can match both roles, it'll assume the brace role.
-* Changed default highlighted operators (now most punctuation) and highlighted braces (added `<` and `>` for C++).
-* Removed optional highlighting for operators. Now hard enabled.
-* Changed loading autocommand for the events "syntax" and "colorscheme" so that the rainbow gets loaded only when there's syntax being applied and aways after switching colorschemes.
-* Changed default colors. Default rainbow colors copied from [gruvbox colorscheme](https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim#L366) (good for dark and light backgrounds).
+What is improved ? 
+-------------------------------------------------------------------------------------------------------- 
 
-Angle brackets are a hard case to deal with. To distinguish "less than" from "bracket for open template argument list" it's assumed that "less than" will always be surrounded by spaces. If not, it'll be treated as an open template's angle bracket (although, still some checking applies for the `template` or `operator` keyword, for example).
+- separately edit guifgs and ctermfgs (the colors used to highlight) 
 
-This fork is optimized for C++ highlighting.
+- now you can design your own parentheses  such as 'begin' and 'end' . (you can also design  what kinds of parentheses to use for different filetypes. ) 
 
-###Simple Configuration
+- now you can even decide to let some operators (like + - * / , ==) hilighted with the parentheses together, you can also decide this seprately for different type of files. 
 
-Put this on your `.vimrc` for loading it for specific file types:
+- no limit of parentheses levels. 
 
-```vim
-au FileType c,cpp,objc,objcpp call rainbow#load()
-```
-or just this to enable it globally:
+- smoother and faster. (linear time complexity) 
 
-```vim
-let g:rainbow_active = 1
-```
+- the code is shorter and easier to be read now. (shorter than 100 lines) 
 
-###Advanced Configuration
-An advanced configuration allows you to define what parentheses to use
-for each type of file. You can also determine the colors of your
-parentheses by this way (read file vim73/rgb.txt for all named colors).
+- the last , but not the least , the chinese statement is added as you see. 
 
-e.g. this is an advanced config (add these sentences to your `.vimrc`):
+Get Old Versions: 
+-------------------------------------------------------------------------------------------------------- 
+- http://www.vim.org/scripts/script.php?script_id=1561 
+- http://www.vim.org/scripts/script.php?script_id=3772 
 
-```vim
-let g:rainbow_active = 1
+Old Versions' Author: 
+-------------------------------------------------------------------------------------------------------- 
+- Martin Krischik (krischik@users.sourceforge.net) 
+- John Gilmore 
+- Luc Hermitte (hermitte@free.fr) 
+- anonym 
 
-let g:rainbow_load_separately = [
-    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-    \ ]
+This Versions' Author: 
+-------------------------------------------------------------------------------------------------------- 
+- Luo Chen (luochen1990@gmail.com) 
 
-let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
-let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
-```
+install details
+-------------------------------------------------------------------------------------------------------- 
 
-###User Command
-```
-:RainbowToggle  --you can use it to toggle this plugin.
-:RainbowLoad    --you can use it to load/reload this plugin.
-```
-I recommend [VAM](https://github.com/MarcWeber/vim-addon-manager) or [Vundle](https://github.com/gmarik/vundle) for plugin management.
+- First, put the rainbow.vim to dir vim73/plugin or vimfiles/plugin (if exists one, the latter is recommended) 
 
-Here's a sample of a dark [gruvbox](https://github.com/morhetz/gruvbox) vim session:
+- Second, add the follow sentences to your`.vimrc`or`_vimrc` : 
+	```
+	let g:rainbow_active = 1 
+	let g:rainbow_operators = 1 
+	```
+- Third, restart your vim and enjoy coding. 
 
-<a href="http://i.imgur.com/J67VbFM.png">![Dark VIM Session](http://i.imgur.com/J67VbFM.png)</a>
+>	Read the source file for Advanced Configuration. 
 
-and here's a slightly lighter [dark solarized](https://github.com/flazz/vim-colorschemes/blob/master/colors/solarized.vim) session:
-
-<a href="http://i.imgur.com/j4g6L92.png">![Lighter VIM Session](http://i.imgur.com/j4g6L92.png)</a>
-
-I thank Luo for being supportive and accepting the operator highlighting idea.
+**Rate this script if you like it, 
+and i'll appreciate it and improve this plugin for you because of your support ! 
+just goto [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
+ 
