@@ -2,7 +2,7 @@ Rainbow Parentheses Improved
 ===
 >	help you read complex code by showing diff level of parentheses in diff color !! 
 
-Description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/ori/README_zh.md)
+Description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/master/README_zh.md)
 -------------------------------------------------------------------------------------------------------- 
 
 As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses. 
