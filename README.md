@@ -53,6 +53,7 @@ Advanced Configuration：
 -------------------------------------------------------------------------------------------------------- 
 
 - there is an example for advanced configuration(also default one), add it to your vimrc and edit it as you wish(just keep the format).
+
 	```vim
 	let g:rainbow_conf = extend({
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
@@ -75,6 +76,7 @@ Advanced Configuration：
 	\	}
 	\}, exists('g:rainbow_conf')? g:rainbow_conf : {})
 	```
+
 - 'guifgs': colors for gui interface, will be used in order.
 - 'ctermfgs': colors for terms
 - 'operators': describe the operators you want to highlight(read the vim help :syn-pattern)
