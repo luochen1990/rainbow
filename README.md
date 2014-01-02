@@ -43,7 +43,6 @@ Install & Simple Configuration:
 	
 	```vim
 	let g:rainbow_active = 1
-	let g:rainbow_operators = 1
 	```
 
 - third, restart your vim and enjoy coding.
