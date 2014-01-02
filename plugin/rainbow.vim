@@ -1,6 +1,6 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.0
+"Script Version: 3.1
 "Author: luochen1990
 "Last Edited: 2014 Jan 1
 "Simple Configuration:
@@ -22,37 +22,46 @@ if exists('s:loaded') || !((exists('g:rainbow_active') && g:rainbow_active) || e
 endif
 let s:loaded = 1
  
-let g:rainbow_conf = extend({
+let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
 \	'operators': '_,_',
 \	'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+\	'default': {},
 \	'separately': {
-\		'*': {},
 \		'lisp': {
 \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 \			'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+\		},
+\		'xml': {
+\			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
 \		},
 \		'html': {
 \			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
 \		},
 \		'tex': {
 \			'operators': '',
-\			'parentheses': [['(',')'], ['\[','\]']],
+\			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
 \		},
 \	}
-\}, exists('g:rainbow_conf')? g:rainbow_conf : {})
+\}
 
-func rainbow#load(conf)
-	call rainbow#clear()
-	let [conf, maxlvl] = [a:conf, has('gui_running')? len(a:conf.guifgs) : len(a:conf.ctermfgs)]
-	let b:rainbow_loaded = maxlvl
+func rainbow#load()
+	let conf = deepcopy(b:rainbow_conf)
+	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
+	for i in range(len(conf.parentheses))
+		let p = conf.parentheses[i]
+		let op = len(p)==3? p[1] : count(keys(conf), 'operators')? conf.operators : ''
+		let conf.parentheses[i] = [p[0], op, p[-1]]
+	endfor
 	let str = 'TOP'
 	for each in range(1, maxlvl)
 		let str .= ',lv'.each
 	endfor
-	let cmd = 'syn region %s matchgroup=%s start=+%s+ end=+%s+ containedin=%s contains=%s'
+	let cmd = 'syn region %s matchgroup=%s start=+%s+ end=+%s+ containedin=%s contains=%s fold'
 	let cmd2 = 'syn match %s %s containedin=%s contained'
+	call rainbow#clear()
+	let b:rainbow_loaded = maxlvl
 	for [left, mid, right] in conf.parentheses
 		for each in range(1, maxlvl - 1)
 			if mid != ''
@@ -105,24 +114,26 @@ func rainbow#toggle()
 	if exists('b:rainbow_loaded')
 		call rainbow#clear()
 	else
-		call rainbow#load(b:rainbow_conf)
+		call rainbow#load()
 	endif
 endfunc
 
 func rainbow#hook()
-	let conf = count(keys(g:rainbow_conf.separately), &ft)? g:rainbow_conf.separately[&ft] : count(keys(g:rainbow_conf.separately), '*')? g:rainbow_conf.separately['*'] : 0
-	if type(conf)==type(0) |return |endif
-	let conf = extend(deepcopy(g:rainbow_conf), conf)
-	unlet conf.separately
-	for i in range(len(conf.parentheses))
-		let p = conf.parentheses[i]
-		"call s:assert((len(p) == 2 || len(p) == 3), 'length of some item in parentheses not 2 or 3')
-		let op = len(p)==3? p[1] : count(keys(conf), 'operators')? conf.operators : ''
-		let conf.parentheses[i] = [p[0], op, p[-1]]
-	endfor
-	unlet conf.operators
-	let b:rainbow_conf = conf
-	call rainbow#load(conf)
+	let g_conf = deepcopy(s:rainbow_conf)
+	if exists('g:rainbow_conf')
+		call extend(g_conf, g:rainbow_conf)
+		if count(keys(g:rainbow_conf), 'separately')
+			call extend(g_conf.separately, s:rainbow_conf.separately)
+			call extend(g_conf.separately, g:rainbow_conf.separately)
+		endif
+	endif
+	let b_conf = count(keys(g_conf.separately), &ft)? g_conf.separately[&ft] : type(g_conf.default)!=type(0)? g_conf.default : 0
+	if type(b_conf)==type(0) |return |endif
+	let b_conf = extend(g_conf, b_conf)
+	unlet b_conf.separately
+	unlet b_conf.default
+	let b:rainbow_conf = b_conf
+	call rainbow#load()
 endfunc
 
 auto syntax * call rainbow#hook()
