@@ -10,11 +10,11 @@ This plugin will help you read these codes by showing different levels of parent
 **See the effect [here](http://vim.wikia.com/wiki/Script:4176)**.
 you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts/script.php?script_id=4176)**.
 
-![python](https://github.com/luochen1990/rainbow/blob/master/demo/python.png)
-![cpp](https://github.com/luochen1990/rainbow/blob/master/demo/cpp.png)
-![lisp](https://github.com/luochen1990/rainbow/blob/master/demo/lisp.png)
-![coffee](https://github.com/luochen1990/rainbow/blob/master/demo/coffee.png)
-![html](https://github.com/luochen1990/rainbow/blob/master/demo/html.png)
+![python](https://raw.github.com/luochen1990/rainbow/master/demo/python.png)
+![cpp](https://raw.github.com/luochen1990/rainbow/master/demo/cpp.png)
+![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
+![coffee](https://raw.github.com/luochen1990/rainbow/master/demo/coffee.png)
+![html](https://raw.github.com/luochen1990/rainbow/master/demo/html.png)
 
 ### What is improved ? 
 
