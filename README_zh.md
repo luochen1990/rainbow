@@ -10,10 +10,15 @@
 点击[这里](http://vim.wikia.com/wiki/Script:4176)可以查看插件效果截图。 
 你同样可以在[Vim官网](http://www.vim.org/scripts/script.php?script_id=4176)里看到这款插件
 
-![python](https://raw.github.com/luochen1990/rainbow/master/demo/python.png)
-![cpp](https://raw.github.com/luochen1990/rainbow/master/demo/cpp.png)
+### lisp
 ![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
+### coffee
 ![coffee](https://raw.github.com/luochen1990/rainbow/master/demo/coffee.png)
+### cpp
+![cpp](https://raw.github.com/luochen1990/rainbow/master/demo/cpp.png)
+### python
+![python](https://raw.github.com/luochen1990/rainbow/master/demo/python.png)
+### html
 ![html](https://raw.github.com/luochen1990/rainbow/master/demo/html.png)
 
 ### 有哪些改进？ 
