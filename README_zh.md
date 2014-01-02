@@ -62,7 +62,7 @@
 - 以下是一个高级配置的样例（也是默认配置），将它加入到你的vimrc并按照你喜欢的方式修改它（但是保持格式）你就可以精确地控制插件的行为了。
 
 	```vim
-	let g:rainbow_conf = extend({
+	let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
 	\	'operators': '_,_',
@@ -81,7 +81,7 @@
 	\			'parentheses': [['(',')'], ['\[','\]']],
 	\		},
 	\	}
-	\}, exists('g:rainbow_conf')? g:rainbow_conf : {})
+	\}
 	```
 
 - 'guifgs': GUI界面的括号颜色(将按顺序循环使用)
