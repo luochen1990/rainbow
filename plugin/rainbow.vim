@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.1
+"Script Version: 3.1.1
 "Author: luochen1990
-"Last Edited: 2014 Jan 1
+"Last Edited: 2014 Jan 3
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -12,7 +12,7 @@
 "	an advanced configuration allows you to define what parentheses to use 
 "	for each type of file . you can also determine the colors of your 
 "	parentheses by this way (read file vim73/rgb.txt for all named colors).
-"	READ THE SOURCE FILE FROM LINE 25 TO LINE 45 FOR EXAMPLE.
+"	READ THE SOURCE FILE FROM LINE 25 TO LINE 50 FOR EXAMPLE.
 "User Command:
 "	:RainbowToggle		--you can use it to toggle this plugin.
 "==============================================================================
@@ -27,8 +27,8 @@ let s:rainbow_conf = {
 \	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
 \	'operators': '_,_',
 \	'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
-\	'default': {},
 \	'separately': {
+\		'*': {},
 \		'lisp': {
 \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 \			'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
@@ -39,8 +39,10 @@ let s:rainbow_conf = {
 \		'html': {
 \			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
 \		},
+\		'vim': {
+\			'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+\		},
 \		'tex': {
-\			'operators': '',
 \			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
 \		},
 \	}
@@ -51,7 +53,7 @@ func rainbow#load()
 	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 	for i in range(len(conf.parentheses))
 		let p = conf.parentheses[i]
-		let op = len(p)==3? p[1] : count(keys(conf), 'operators')? conf.operators : ''
+		let op = len(p)==3? p[1] : has_key(conf, 'operators')? conf.operators : ''
 		let conf.parentheses[i] = [p[0], op, p[-1]]
 	endfor
 	let str = 'TOP'
@@ -119,21 +121,13 @@ func rainbow#toggle()
 endfunc
 
 func rainbow#hook()
-	let g_conf = deepcopy(s:rainbow_conf)
-	if exists('g:rainbow_conf')
-		call extend(g_conf, g:rainbow_conf)
-		if count(keys(g:rainbow_conf), 'separately')
-			call extend(g_conf.separately, s:rainbow_conf.separately)
-			call extend(g_conf.separately, g:rainbow_conf.separately)
-		endif
+	let g_conf = extend(copy(s:rainbow_conf), exists('g:rainbow_conf')? g:rainbow_conf : {}) |unlet g_conf.separately
+	let separately = extend(copy(s:rainbow_conf.separately), exists('g:rainbow_conf.separately')? g:rainbow_conf.separately : {})
+	let b_conf = has_key(separately, &ft)? separately[&ft] : separately['*']
+	if type(b_conf)==type({})
+		let b:rainbow_conf = extend(g_conf, b_conf)
+		call rainbow#load()
 	endif
-	let b_conf = count(keys(g_conf.separately), &ft)? g_conf.separately[&ft] : type(g_conf.default)!=type(0)? g_conf.default : 0
-	if type(b_conf)==type(0) |return |endif
-	let b_conf = extend(g_conf, b_conf)
-	unlet b_conf.separately
-	unlet b_conf.default
-	let b:rainbow_conf = b_conf
-	call rainbow#load()
 endfunc
 
 auto syntax * call rainbow#hook()
