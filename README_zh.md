@@ -5,10 +5,7 @@
 插件简介:
 -------------------------------------------------------------------------------------------------------- 
 
-众所周知，最复杂的代码都是由一堆乱七八糟的括号组成。
-这款插件通过以不同的颜色展示不同层次的括号，致力于帮助你阅读这样的复杂代码。 
-点击[这里](http://vim.wikia.com/wiki/Script:4176)可以查看插件效果截图。 
-你同样可以在[Vim官网](http://www.vim.org/scripts/script.php?script_id=4176)里看到这款插件
+众所周知，最复杂的代码都是由一堆乱七八糟的括号组成。这款插件通过以不同的颜色展示不同层次的括号，致力于帮助你阅读这样的复杂代码。 你同样可以在[Vim官网](http://www.vim.org/scripts/script.php?script_id=4176)里看到这款插件
 
 ### lisp
 ![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
@@ -33,28 +30,23 @@
 - 最后但并非不重要的一点是，如你所见，现在增加了中文说明。
 
 ### 以下是本插件所参考的旧版本： 
-- http://www.vim.org/scripts/script.php?script_id=1561 
-- http://www.vim.org/scripts/script.php?script_id=3772 
-
-### 以下是旧版本的作者们，感谢他们！ 
-- Martin Krischik (krischik@users.sourceforge.net) 
-- John Gilmore 
-- Luc Hermitte (hermitte@free.fr) 
-- anonym 
-
-### 以下是这个版本的作者，有问题可以找这货 
-- Luo Chen (luochen1990@gmail.com) 
+- http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
+- http://www.vim.org/scripts/script.php?script_id=3772 (kien)
 
 安装说明： 
 -------------------------------------------------------------------------------------------------------- 
 
+### 使用Bundle安装:
+- `Bundle 'luochen1990/rainbow'`
+- 在vimrc加入 `let g:rainbow_active = 1` (顺序不重要)
+
+### 手动安装:
 - 首先，将下载到的`rainbow.vim`文件放到`vimfiles/plugin`文件夹（在linux系统里是`~/.vim/plugin`文件夹）中。 
 - 然后，将以下句子，加入到你的vim配置文件中（windows下配置文件是`_vimrc`，而linux下是`.vimrc`） 
 	```vim
 	let g:rainbow_active = 1 
 	```
 - 最后，重新启动你的vim，你就可以享受coding了。
-
 
 高级配置：
 -------------------------------------------------------------------------------------------------------- 

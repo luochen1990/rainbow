@@ -10,16 +10,11 @@ This plugin will help you read these codes by showing different levels of parent
 **See the effect [here](http://vim.wikia.com/wiki/Script:4176)**.
 you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts/script.php?script_id=4176)**.
 
-### lisp
+#### lisp
 ![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
-### coffee
-![coffee](https://raw.github.com/luochen1990/rainbow/master/demo/coffee.png)
-### cpp
-![cpp](https://raw.github.com/luochen1990/rainbow/master/demo/cpp.png)
-### python
-![python](https://raw.github.com/luochen1990/rainbow/master/demo/python.png)
-### html
+#### html
 ![html](https://raw.github.com/luochen1990/rainbow/master/demo/html.png)
+#### [more](https://github.com/luochen1990/rainbow/blob/master/demo/more.md)
 
 ### What is improved ? 
 
@@ -49,15 +44,17 @@ you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts
 Install & Simple Configuration:
 -------------------------------------------------------------------------------------------------------- 
 
+### Install by Bundle:
+- `Bundle 'luochen1990/rainbow'`
+- 在vimrc加入 `let g:rainbow_active = 1` (顺序不重要)
+
+### manually:
 - first, put `rainbow.vim`(this file) to dir `vimfiles/plugin` or `~/.vim/plugin`
 - second, add the follow sentences to your `.vimrc` or `_vimrc` :
-	
 	```vim
 	let g:rainbow_active = 1
 	```
-
 - third, restart your vim and enjoy coding.
-
 
 Advanced Configuration：
 -------------------------------------------------------------------------------------------------------- 
