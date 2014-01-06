@@ -35,11 +35,11 @@ you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts
 Install & Simple Configuration:
 -------------------------------------------------------------------------------------------------------- 
 
-### Install by Bundle:
+### Install by Vundle:
 - `Bundle 'luochen1990/rainbow'`
 - add this to your vimrc: `let g:rainbow_active = 1`
 
-### manually:
+### Manually:
 - first, put `rainbow.vim`(this file) to dir `~/.vim/plugin` or `vimfiles/plugin`
 - second, add the follow sentences to your `.vimrc` or `_vimrc` :
 	```vim
