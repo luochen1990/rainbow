@@ -28,28 +28,19 @@ you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts
 - now json style configuration used, more understandable and more readable, easily for advanced configuration.
 - the last , but not the least , the chinese statement is added as you see. 
 
-### Get Old Versions: 
-- http://www.vim.org/scripts/script.php?script_id=1561 
-- http://www.vim.org/scripts/script.php?script_id=3772 
-
-### Old Versions' Author: 
-- Martin Krischik (krischik@users.sourceforge.net) 
-- John Gilmore 
-- Luc Hermitte (hermitte@free.fr) 
-- anonym 
-
-### This Versions' Author: 
-- Luo Chen (luochen1990@gmail.com) 
+### Old Versions Referenced: 
+- http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
+- http://www.vim.org/scripts/script.php?script_id=3772 (kien)
 
 Install & Simple Configuration:
 -------------------------------------------------------------------------------------------------------- 
 
 ### Install by Bundle:
 - `Bundle 'luochen1990/rainbow'`
-- 在vimrc加入 `let g:rainbow_active = 1` (顺序不重要)
+- add this to your vimrc: `let g:rainbow_active = 1`
 
 ### manually:
-- first, put `rainbow.vim`(this file) to dir `vimfiles/plugin` or `~/.vim/plugin`
+- first, put `rainbow.vim`(this file) to dir `~/.vim/plugin` or `vimfiles/plugin`
 - second, add the follow sentences to your `.vimrc` or `_vimrc` :
 	```vim
 	let g:rainbow_active = 1

@@ -7,16 +7,11 @@
 
 众所周知，最复杂的代码都是由一堆乱七八糟的括号组成。这款插件通过以不同的颜色展示不同层次的括号，致力于帮助你阅读这样的复杂代码。 你同样可以在[Vim官网](http://www.vim.org/scripts/script.php?script_id=4176)里看到这款插件
 
-### lisp
+#### lisp
 ![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
-### coffee
-![coffee](https://raw.github.com/luochen1990/rainbow/master/demo/coffee.png)
-### cpp
-![cpp](https://raw.github.com/luochen1990/rainbow/master/demo/cpp.png)
-### python
-![python](https://raw.github.com/luochen1990/rainbow/master/demo/python.png)
-### html
+#### html
 ![html](https://raw.github.com/luochen1990/rainbow/master/demo/html.png)
+#### [more](https://github.com/luochen1990/rainbow/blob/master/demo/more.md)
 
 ### 有哪些改进？ 
 - 更快速和流畅的体验。
