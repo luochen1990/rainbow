@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.1.1
+"Script Version: 3.1.2
 "Author: luochen1990
-"Last Edited: 2014 Jan 3
+"Last Edited: 2014 Jan 14
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -40,7 +40,7 @@ let s:rainbow_conf = {
 \			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
 \		},
 \		'vim': {
-\			'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+\			'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
 \		},
 \		'tex': {
 \			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
