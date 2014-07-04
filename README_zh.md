@@ -33,13 +33,16 @@
 
 ### 使用Vundle安装:
 - `Bundle 'luochen1990/rainbow'`
-- 在vimrc加入 `let g:rainbow_active = 1` (顺序不重要)
+- 在vimrc加入以下内容：
+	```vim
+	let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+	```
 
 ### 手动安装:
 - 首先，将下载到的`rainbow.vim`文件放到`vimfiles/plugin`文件夹（在linux系统里是`~/.vim/plugin`文件夹）中。 
 - 然后，将以下句子，加入到你的vim配置文件中（windows下配置文件是`_vimrc`，而linux下是`.vimrc`） 
 	```vim
-	let g:rainbow_active = 1
+	let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	```
 - 最后，重新启动你的vim，你就可以享受coding了。
 
@@ -48,7 +51,7 @@
 
 以下是一个配置的样例（也是我在用的配置），将它加入到你的vimrc并按照你喜欢的方式修改它（但是保持格式）你就可以精确地控制插件的行为了。
 
-	```vim
+```vim
 	let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
@@ -70,7 +73,7 @@
 	\       'stylus': 0,
 	\	}
 	\}
-	```
+```
 
 - 'guifgs': GUI界面的括号颜色(将按顺序循环使用)
 - 'ctermfgs': 终端下的括号颜色(同上,插件将根据环境进行选择)

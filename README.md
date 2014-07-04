@@ -54,7 +54,7 @@ Configure:
 
 There is an example for advanced configuration(which i'm using), add it to your vimrc and edit it as you wish(just keep the format).
 
-	```vim
+```vim
 	let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
@@ -76,7 +76,7 @@ There is an example for advanced configuration(which i'm using), add it to your 
 	\       'stylus': 0,
 	\	}
 	\}
-	```
+```
 
 - 'guifgs': colors for gui interface, will be used in order.
 - 'ctermfgs': colors for terms
