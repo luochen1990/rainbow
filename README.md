@@ -5,10 +5,9 @@ Rainbow Parentheses Improved
 Description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/master/README_zh.md)
 ---------------------------------------------------------------------------------------------------
 
-As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses(typically: lisp). 
-This plugin will help you read these codes by showing different levels of parentheses in different colors. 
-**See the effect [here](http://vim.wikia.com/wiki/Script:4176)**.
-you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts/script.php?script_id=4176)**.
+As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses(typically: lisp).
+This plugin will help you read these codes by showing different levels of parentheses in different colors.
+you can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/script.php?script_id=4176)**.
 
 #### lisp
 ![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
@@ -35,7 +34,7 @@ you can also find this plugin in **www.vim.org [here](http://www.vim.org/scripts
 Install:
 --------
 
-### Install by Vundle:
+### via Vundle:
 - `Bundle 'luochen1990/rainbow'`
 - add this to your vimrc:
 	```vim
