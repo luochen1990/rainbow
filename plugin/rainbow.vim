@@ -1,6 +1,6 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.1.3
+"Script Version: 3.2.0
 "Author: luochen1990
 "Last Edited: 2014 April 30
 "Simple Configuration:
