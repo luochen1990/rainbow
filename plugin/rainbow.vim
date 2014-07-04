@@ -29,21 +29,17 @@ let s:rainbow_conf = {
 \	'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
 \	'separately': {
 \		'*': {},
-\		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-\			'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+\		'tex': {
+\			'parentheses': [['(',')'], ['\[','\]']],
 \		},
 \		'xml': {
-\			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+\			'parentheses': [['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+\		},
+\		'xhtml': {
+\			'parentheses': [['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
 \		},
 \		'html': {
-\			'parentheses': [['(',')'], ['\[','\]'], ['{','}'], ['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
-\		},
-\		'vim': {
-\			'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
-\		},
-\		'tex': {
-\			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+\			'parentheses': [['\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!(\a[^>]*[^/]\>|\a\>)','</[^>]*>']],
 \		},
 \	}
 \}
@@ -128,7 +124,7 @@ func rainbow#hook()
 	let g_conf = extend(copy(s:rainbow_conf), exists('g:rainbow_conf')? g:rainbow_conf : {}) |unlet g_conf.separately
 	let separately = extend(copy(s:rainbow_conf.separately), exists('g:rainbow_conf.separately')? g:rainbow_conf.separately : {})
 	let b_conf = has_key(separately, &ft)? separately[&ft] : separately['*']
-	if type(b_conf)==type({})
+	if type(b_conf) == type({})
 		let b:rainbow_conf = extend(g_conf, b_conf)
 		call rainbow#load()
 	endif
