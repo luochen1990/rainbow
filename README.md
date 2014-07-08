@@ -72,8 +72,8 @@ There is an example for advanced configuration(which i'm using), add it to your 
 	\		'tex': {
 	\			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
 	\		},
-	\       'css': 0,
-	\       'stylus': 0,
+	\		'css': 0,
+	\		'stylus': 0,
 	\	}
 	\}
 ```
