@@ -1,6 +1,6 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.2.0
+"Script Version: 3.2.1
 "Author: luochen1990
 "Last Edited: 2014 April 30
 "Simple Configuration:
@@ -33,13 +33,13 @@ let s:rainbow_conf = {
 \			'parentheses': [['(',')'], ['\[','\]']],
 \		},
 \		'xml': {
-\			'parentheses': [['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+\			'parentheses': [['\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>','</\z1>']],
 \		},
 \		'xhtml': {
-\			'parentheses': [['<\a[^>]*[^/]>\|<\a>','</[^>]*>']],
+\			'parentheses': [['\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>','</\z1>']],
 \		},
 \		'html': {
-\			'parentheses': [['\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!(\a[^>]*[^/]\>|\a\>)','</[^>]*>']],
+\			'parentheses': [['\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>','</\z1>']],
 \		},
 \	}
 \}
@@ -56,7 +56,7 @@ func rainbow#load()
 	for each in range(1, maxlvl)
 		let str .= ',lv'.each
 	endfor
-	let cmd = 'syn region %s matchgroup=%s start=+%s+ end=+%s+ containedin=%s contains=%s fold'
+	let cmd = 'syn region %s matchgroup=%s start=$%s$ end=$%s$ containedin=%s contains=%s fold'
 	let cmd2 = 'syn match %s %s containedin=%s contained'
 	call rainbow#clear()
 	let b:rainbow_loaded = maxlvl
