@@ -1,6 +1,6 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.2.1
+"Script Version: 3.2.2
 "Author: luochen1990
 "Last Edited: 2014 April 30
 "Simple Configuration:
@@ -45,7 +45,7 @@ let s:rainbow_conf = {
 \}
 
 func s:resolve_parenthesis(p)
-	let [ls, r, op] = [split(a:p), [], '']
+	let [ls, r, op] = [split(a:p, '\v\w+%(\=(.)%(\1@!.)*\1[^ ]*)? ?\zs', 0), [], '']
 	for s in ls
 		let [k, v] = [matchstr(s, '^[^=]\+\ze='), matchstr(s, '^[^=]\+=\zs.*')]
 		if k == 'step'
@@ -54,7 +54,7 @@ func s:resolve_parenthesis(p)
 			call add(r, s)
 		endif
 	endfor
-	return [join(r), op]
+	return [join(r, ''), op]
 endfunc
 
 func rainbow#load()
@@ -74,11 +74,11 @@ func rainbow#load()
 	let b:rainbow_loaded = maxlvl
 	for parenthesis_args in conf.parentheses
 		let [parenthesis, op] = s:resolve_parenthesis(parenthesis_args)
-		for each in range(maxlvl)
+		for lvl in range(maxlvl)
 			if op != ''
-				exe printf(def_op, 'rainbow_o'.each, op, 'rainbow_r'.each)
+				exe printf(def_op, 'rainbow_o'.lvl, op, 'rainbow_r'.lvl)
 			endif
-			exe printf(def_rg, 'rainbow_r'.each, 'rainbow_p'.each, 'rainbow_r'.((each + maxlvl - 1) % maxlvl).(each == 0 ? '' : ' contained'), 'TOP,rainbow_r'.((each + 1) % maxlvl).',rainbow_o'.each, parenthesis)
+			exe printf(def_rg, 'rainbow_r'.lvl, 'rainbow_p'.lvl, 'rainbow_r'.((lvl + maxlvl - 1) % maxlvl).(lvl == 0 ? '' : ' contained'), 'TOP,rainbow_r'.((lvl + 1) % maxlvl).',rainbow_o'.lvl, parenthesis)
 		endfor
 	endfor
 	call rainbow#show()
