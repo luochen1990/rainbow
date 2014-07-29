@@ -26,51 +26,60 @@ let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
 \	'operators': '_,_',
-\	'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+\	'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
 \	'separately': {
 \		'*': {},
 \		'tex': {
-\			'parentheses': [['(',')'], ['\[','\]']],
+\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
 \		},
 \		'xml': {
-\			'parentheses': [['\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>','</\z1>']],
+\			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
 \		},
 \		'xhtml': {
-\			'parentheses': [['\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>','</\z1>']],
+\			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
 \		},
 \		'html': {
-\			'parentheses': [['\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>','</\z1>']],
+\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 \		},
 \	}
 \}
 
+func s:resolve_parenthesis(p)
+	let [ls, r, op] = [split(a:p), [], '']
+	for s in ls
+		let [k, v] = [matchstr(s, '^[^=]\+\ze='), matchstr(s, '^[^=]\+=\zs.*')]
+		if k == 'step'
+			let op = v
+		else
+			call add(r, s)
+		endif
+	endfor
+	return [join(r), op]
+endfunc
+
 func rainbow#load()
-	let conf = deepcopy(b:rainbow_conf)
+	let conf = b:rainbow_conf
 	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 	for i in range(len(conf.parentheses))
 		let p = conf.parentheses[i]
-		let op = len(p)==3? p[1] : has_key(conf, 'operators')? conf.operators : ''
-		let conf.parentheses[i] = [p[0], op, p[-1]]
+		if type(p) == type([])
+			let op = len(p)==3? p[1] : has_key(conf, 'operators')? conf.operators : ''
+			let conf.parentheses[i] = op != ''? printf('start=#%s# step=%s end=#%s#', p[0], op, p[-1]) : printf('start=#%s# end=#%s#', p[0], p[-1])
+		endif
 	endfor
-	let str = 'TOP'
-	for each in range(1, maxlvl)
-		let str .= ',lv'.each
-	endfor
-	let cmd = 'syn region %s matchgroup=%s start=$%s$ end=$%s$ containedin=%s contains=%s fold'
-	let cmd2 = 'syn match %s %s containedin=%s contained'
+	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
+	let def_op = 'syn match %s %s containedin=%s contained'
+
 	call rainbow#clear()
 	let b:rainbow_loaded = maxlvl
-	for [left, mid, right] in conf.parentheses
-		for each in range(1, maxlvl - 1)
-			if mid != ''
-				exe printf(cmd2, 'op_lv'.each, mid, 'lv'.each)
+	for parenthesis_args in conf.parentheses
+		let [parenthesis, op] = s:resolve_parenthesis(parenthesis_args)
+		for each in range(maxlvl)
+			if op != ''
+				exe printf(def_op, 'rainbow_o'.each, op, 'rainbow_r'.each)
 			endif
-			exe printf(cmd, 'lv'.each, 'lv'.each.'c', left, right, 'lv'.(each+1), str.',op_lv'.each)
+			exe printf(def_rg, 'rainbow_r'.each, 'rainbow_p'.each, 'rainbow_r'.((each + maxlvl - 1) % maxlvl).(each == 0 ? '' : ' contained'), 'TOP,rainbow_r'.((each + 1) % maxlvl).',rainbow_o'.each, parenthesis)
 		endfor
-		if mid != ''
-			exe printf(cmd2, 'op_lv'.maxlvl, mid, 'lv'.maxlvl)
-		endif
-		exe printf(cmd, 'lv'.maxlvl, 'lv'.maxlvl.'c', left, right, 'lv1', str.',op_lv'.maxlvl)
 	endfor
 	call rainbow#show()
 endfunc
@@ -78,9 +87,9 @@ endfunc
 func rainbow#clear()
 	call rainbow#hide()
 	if exists('b:rainbow_loaded')
-		for each in range(1 , b:rainbow_loaded)
-			exe 'syn clear lv'.each
-			exe 'syn clear op_lv'.each
+		for each in range(b:rainbow_loaded)
+			exe 'syn clear rainbow_r'.each
+			exe 'syn clear rainbow_o'.each
 		endfor
 		unlet b:rainbow_loaded
 	endif
@@ -89,20 +98,20 @@ endfunc
 func rainbow#show()
 	if exists('b:rainbow_loaded')
 		let b:rainbow_visible = 1
-		for id in range(1 , b:rainbow_loaded)
-			let ctermfg = b:rainbow_conf.ctermfgs[(b:rainbow_loaded - id) % len(b:rainbow_conf.ctermfgs)]
-			let guifg = b:rainbow_conf.guifgs[(b:rainbow_loaded - id) % len(b:rainbow_conf.guifgs)]
-			exe 'hi default lv'.id.'c ctermfg='.ctermfg.' guifg='.guifg
-			exe 'hi default op_lv'.id.' ctermfg='.ctermfg.' guifg='.guifg
+		for id in range(b:rainbow_loaded)
+			let ctermfg = b:rainbow_conf.ctermfgs[id % len(b:rainbow_conf.ctermfgs)]
+			let guifg = b:rainbow_conf.guifgs[id % len(b:rainbow_conf.guifgs)]
+			exe 'hi default rainbow_p'.id.' ctermfg='.ctermfg.' guifg='.guifg
+			exe 'hi default rainbow_o'.id.' ctermfg='.ctermfg.' guifg='.guifg
 		endfor
 	endif
 endfunc
 
 func rainbow#hide()
 	if exists('b:rainbow_visible')
-		for each in range(1, b:rainbow_loaded)
-			exe 'hi clear lv'.each.'c'
-			exe 'hi clear op_lv'.each.''
+		for each in range(b:rainbow_loaded)
+			exe 'hi clear rainbow_p'.each
+			exe 'hi clear rainbow_o'.each
 		endfor
 		unlet b:rainbow_visible
 	endif
