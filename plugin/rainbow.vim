@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.2.2
+"Script Version: 3.2.3
 "Author: luochen1990
-"Last Edited: 2014 April 30
+"Last Edited: 2014 July 31
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -31,6 +31,9 @@ let s:rainbow_conf = {
 \		'*': {},
 \		'tex': {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+\		},
+\		'vim': {
+\			'containedin': 'vimFuncBody',
 \		},
 \		'xml': {
 \			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
@@ -67,7 +70,7 @@ func rainbow#load()
 			let conf.parentheses[i] = op != ''? printf('start=#%s# step=%s end=#%s#', p[0], op, p[-1]) : printf('start=#%s# end=#%s#', p[0], p[-1])
 		endif
 	endfor
-	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
+	let def_rg = 'syn region %s matchgroup=%s contains=TOP containedin=%s %s'
 	let def_op = 'syn match %s %s containedin=%s contained'
 
 	call rainbow#clear()
@@ -78,7 +81,7 @@ func rainbow#load()
 			if op != ''
 				exe printf(def_op, 'rainbow_o'.lvl, op, 'rainbow_r'.lvl)
 			endif
-			exe printf(def_rg, 'rainbow_r'.lvl, 'rainbow_p'.lvl, 'rainbow_r'.((lvl + maxlvl - 1) % maxlvl).(lvl == 0 ? '' : ' contained'), 'TOP,rainbow_r'.((lvl + 1) % maxlvl).',rainbow_o'.lvl, parenthesis)
+			exe printf(def_rg, 'rainbow_r'.lvl, 'rainbow_p'.lvl.(lvl == 0 ? '' : ' contained'), (has_key(conf, 'containedin')? conf.containedin.',' : '').'rainbow_r'.((lvl + maxlvl - 1) % maxlvl), parenthesis)
 		endfor
 	endfor
 	call rainbow#show()
