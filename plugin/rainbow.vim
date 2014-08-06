@@ -35,6 +35,9 @@ let s:rainbow_conf = {
 \		'vim': {
 \			'containedin': 'vimFuncBody',
 \		},
+\		'php': {
+\			'containedin': '@htmlPreproc',
+\		},
 \		'xml': {
 \			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
 \		},
