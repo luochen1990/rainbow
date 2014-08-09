@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.2.3
+"Script Version: 3.3.0
 "Author: luochen1990
-"Last Edited: 2014 July 31
+"Last Edited: 2014 Aug 9
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -33,10 +33,7 @@ let s:rainbow_conf = {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
 \		},
 \		'vim': {
-\			'containedin': 'vimFuncBody',
-\		},
-\		'php': {
-\			'containedin': '@htmlPreproc',
+\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ containedin=vimFuncBody'],
 \		},
 \		'xml': {
 \			'parentheses': ['start=/\v\<\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'))?)*\>/ end=#</\z1># fold'],
@@ -47,20 +44,29 @@ let s:rainbow_conf = {
 \		'html': {
 \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 \		},
+\		'php': {
+\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold', 'start=/(/ end=/)/ containedin=@htmlPreproc contains=@phpClTop', 'start=/\[/ end=/\]/ containedin=@htmlPreproc contains=@phpClTop', 'start=/{/ end=/}/ containedin=@htmlPreproc contains=@phpClTop'],
+\		},
+\		'css': 0,
 \	}
 \}
 
 func s:resolve_parenthesis(p)
-	let [ls, r, op] = [split(a:p, '\v\w+%(\=(.)%(\1@!.)*\1[^ ]*)? ?\zs', 0), [], '']
+	let ls = split(a:p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
+	let [paren, containedin, contains, op] = ['', '', 'TOP', '']
 	for s in ls
 		let [k, v] = [matchstr(s, '^[^=]\+\ze='), matchstr(s, '^[^=]\+=\zs.*')]
 		if k == 'step'
 			let op = v
+		elseif k == 'contains'
+			let contains = v
+		elseif k == 'containedin'
+			let containedin = v
 		else
-			call add(r, s)
+			let paren .= s
 		endif
 	endfor
-	return [join(r, ''), op]
+	return [paren, containedin, contains, op]
 endfunc
 
 func rainbow#load()
@@ -73,19 +79,26 @@ func rainbow#load()
 			let conf.parentheses[i] = op != ''? printf('start=#%s# step=%s end=#%s#', p[0], op, p[-1]) : printf('start=#%s# end=#%s#', p[0], p[-1])
 		endif
 	endfor
-	let def_rg = 'syn region %s matchgroup=%s contains=TOP containedin=%s %s'
+	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
 	let def_op = 'syn match %s %s containedin=%s contained'
 
 	call rainbow#clear()
 	let b:rainbow_loaded = maxlvl
 	for parenthesis_args in conf.parentheses
-		let [parenthesis, op] = s:resolve_parenthesis(parenthesis_args)
+		let [paren, containedin, contains, op] = s:resolve_parenthesis(parenthesis_args)
 		for lvl in range(maxlvl)
-			if op != ''
-				exe printf(def_op, 'rainbow_o'.lvl, op, 'rainbow_r'.lvl)
+			if op != '' |exe printf(def_op, 'rainbow_o'.lvl, op, 'rainbow_r'.lvl) |endif
+			if lvl == 0
+				if containedin == ''
+					exe printf(def_rg, 'rainbow_r0', 'rainbow_p0', 'rainbow_r'.(maxlvl - 1), contains, paren)
+				endif
+			else
+				exe printf(def_rg, 'rainbow_r'.lvl, 'rainbow_p'.lvl.(' contained'), 'rainbow_r'.((lvl + maxlvl - 1) % maxlvl), contains, paren)
 			endif
-			exe printf(def_rg, 'rainbow_r'.lvl, 'rainbow_p'.lvl.(lvl == 0 ? '' : ' contained'), (has_key(conf, 'containedin')? conf.containedin.',' : '').'rainbow_r'.((lvl + maxlvl - 1) % maxlvl), parenthesis)
 		endfor
+		if containedin != ''
+			exe printf(def_rg, 'rainbow_r0', 'rainbow_p0 contained', containedin.',rainbow_r'.(maxlvl - 1), contains, paren)
+		endif
 	endfor
 	call rainbow#show()
 endfunc
