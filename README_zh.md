@@ -8,10 +8,10 @@
 众所周知，最复杂的代码都是由一堆乱七八糟的括号组成。这款插件通过以不同的颜色展示不同层次的括号，致力于帮助你阅读这样的复杂代码。 你同样可以在[Vim官网](http://www.vim.org/scripts/script.php?script_id=4176)里看到这款插件
 
 #### lisp
-![lisp](https://raw.github.com/luochen1990/rainbow/master/demo/lisp.png)
+![lisp](https://raw.githubusercontent.com/luochen1990/rainbow/demo/lisp.png)
 #### html
-![html](https://raw.github.com/luochen1990/rainbow/master/demo/html.png)
-#### [more](https://github.com/luochen1990/rainbow/blob/master/demo/more.md)
+![html](https://raw.githubusercontent.com/luochen1990/rainbow/demo/html.png)
+#### [more](https://github.com/luochen1990/rainbow/blob/demo/more.md)
 
 ### 有哪些改进？ 
 - 更快速和流畅的体验。
@@ -32,11 +32,11 @@
 ---------
 
 ### 使用Vundle安装:
-- `Bundle 'luochen1990/rainbow'`
-- 在vimrc加入以下内容：
-	```vim
-	let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-	```
+
+```vim
+Bundle 'luochen1990/rainbow'
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+```
 
 ### 手动安装:
 - 首先，将下载到的`rainbow.vim`文件放到`vimfiles/plugin`文件夹（在linux系统里是`~/.vim/plugin`文件夹）中。 
