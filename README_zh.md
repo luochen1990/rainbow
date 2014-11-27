@@ -54,23 +54,24 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 ```vim
 	let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
+	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
 	\	'operators': '_,_',
-	\	'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
 	\		'*': {},
+	\		'tex': {
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+	\		},
 	\		'lisp': {
 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-	\			'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
 	\		},
 	\		'vim': {
-	\			'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+	\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
 	\		},
-	\		'tex': {
-	\			'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+	\		'html': {
+	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 	\		},
 	\		'css': 0,
-	\		'stylus': 0,
 	\	}
 	\}
 ```
@@ -80,6 +81,7 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 - 'operators': 描述你希望哪些运算符跟着与它同级的括号一起高亮(见vim帮助 :syn-pattern)
 - 'parentheses': 描述哪些模式将被当作括号处理,每一组括号由两个vim正则表达式描述
 - 'separately': 针对文件类型(由&ft决定)作不同的配置,未被单独设置的文件类型使用`*`下的配置,值为`0`表示仅对该类型禁用插件
+- 省略某个字段以使用默认设置
 
 -------------------------------------------------------------------
 **最后，如果你喜欢这个插件，给它一个评价，我会心存感激，并且因为你的肯定继续改进这个插件！（从[该页面](http://www.vim.org/scripts/script.php?script_id=4176)下方，选择`Life Changing`选项，然后点击`rate`）**
