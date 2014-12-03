@@ -1,6 +1,6 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.3.1
+"Script Version: 3.3.2
 "Author: luochen1990
 "Last Edited: 2014 Nov 27
 "Simple Configuration:
@@ -86,6 +86,7 @@ func rainbow#load()
 	let b:rainbow_loaded = maxlvl
 	for parenthesis_args in conf.parentheses
 		let [paren, containedin, contains, op] = s:resolve_parenthesis(parenthesis_args)
+		if op == '' |let op = conf.operators |endif
 		for lvl in range(maxlvl)
 			if op != '' |exe printf(def_op, 'rainbow_o'.lvl, op, 'rainbow_r'.lvl) |endif
 			if lvl == 0
