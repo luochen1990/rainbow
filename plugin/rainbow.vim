@@ -101,6 +101,11 @@ func rainbow#load()
 			exe printf(def_rg, 'rainbow_r0', 'rainbow_p0 contained', containedin.',rainbow_r'.(maxlvl - 1), contains, paren)
 		endif
 	endfor
+	syn cluster rainbow_cluster contains=rainbow_r0
+	for lvl in range(maxlvl)
+		let def_clust = "syn cluster rainbow_cluster add = rainbow_r".lvl
+	endfor
+	exe def_clust
 	call rainbow#show()
 endfunc
 
