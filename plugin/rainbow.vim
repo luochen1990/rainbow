@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.3.2
+"Script Version: 3.3.3
 "Author: luochen1990
-"Last Edited: 2014 Nov 27
+"Last Edited: 2015 Jan 13
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -151,7 +151,11 @@ endfunc
 
 func rainbow#hook()
 	let g_conf = extend(copy(s:rainbow_conf), exists('g:rainbow_conf')? g:rainbow_conf : {}) |unlet g_conf.separately
-	let separately = extend(copy(s:rainbow_conf.separately), exists('g:rainbow_conf.separately')? g:rainbow_conf.separately : {})
+	if exists('g:rainbow_conf.separately') && has_key(g:rainbow_conf.separately, '*')
+		let separately = copy(g:rainbow_conf.separately)
+	else
+		let separately = extend(copy(s:rainbow_conf.separately), exists('g:rainbow_conf.separately')? g:rainbow_conf.separately : {})
+	endif
 	let b_conf = has_key(separately, &ft)? separately[&ft] : separately['*']
 	if type(b_conf) == type({})
 		let b:rainbow_conf = extend(g_conf, b_conf)
