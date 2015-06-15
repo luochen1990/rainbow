@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.3.3
+"Script Version: 3.3.4
 "Author: luochen1990
-"Last Edited: 2015 Jan 13
+"Last Edited: 2015 June 15
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -21,7 +21,7 @@ if exists('s:loaded') || !(exists('g:rainbow_active') || exists('g:rainbow_conf'
 	finish
 endif
 let s:loaded = 1
- 
+
 let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
@@ -29,6 +29,9 @@ let s:rainbow_conf = {
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
 \		'*': {},
+\		'lisp': {
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\		},
 \		'tex': {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
 \		},
@@ -164,6 +167,8 @@ func rainbow#hook()
 endfunc
 
 command! RainbowToggle call rainbow#toggle()
+command! RainbowToggleOn call rainbow#load()
+command! RainbowToggleOff call rainbow#clear()
 
 if (exists('g:rainbow_active') && g:rainbow_active)
 	auto syntax * call rainbow#hook()
