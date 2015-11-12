@@ -9,8 +9,8 @@
 "	 	let g:rainbow_active = 1
 "	third, restart your vim and enjoy coding.
 "Advanced Configuration:
-"	an advanced configuration allows you to define what parentheses to use 
-"	for each type of file . you can also determine the colors of your 
+"	an advanced configuration allows you to define what parentheses to use
+"	for each type of file . you can also determine the colors of your
 "	parentheses by this way (read file vim73/rgb.txt for all named colors).
 "	READ THE SOURCE FILE FROM LINE 25 TO LINE 50 FOR EXAMPLE.
 "User Command:
@@ -124,8 +124,8 @@ func rainbow#show()
 		for id in range(b:rainbow_loaded)
 			let ctermfg = b:rainbow_conf.ctermfgs[id % len(b:rainbow_conf.ctermfgs)]
 			let guifg = b:rainbow_conf.guifgs[id % len(b:rainbow_conf.guifgs)]
-			exe 'hi default rainbow_p'.id.' ctermfg='.ctermfg.' guifg='.guifg
-			exe 'hi default rainbow_o'.id.' ctermfg='.ctermfg.' guifg='.guifg
+			exe 'hi rainbow_p'.id.' ctermfg='.ctermfg.' guifg='.guifg
+			exe 'hi rainbow_o'.id.' ctermfg='.ctermfg.' guifg='.guifg
 		endfor
 	endif
 endfunc
