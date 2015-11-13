@@ -9,8 +9,8 @@
 "	 	let g:rainbow_active = 1
 "	third, restart your vim and enjoy coding.
 "Advanced Configuration:
-"	an advanced configuration allows you to define what parentheses to use 
-"	for each type of file . you can also determine the colors of your 
+"	an advanced configuration allows you to define what parentheses to use
+"	for each type of file . you can also determine the colors of your
 "	parentheses by this way (read file vim73/rgb.txt for all named colors).
 "	READ THE SOURCE FILE FROM LINE 25 TO LINE 50 FOR EXAMPLE.
 "User Command:
@@ -104,6 +104,14 @@ func rainbow#load()
 			exe printf(def_rg, 'rainbow_r0', 'rainbow_p0 contained', containedin.',rainbow_r'.(maxlvl - 1), contains, paren)
 		endif
 	endfor
+
+	let cluster_list = []
+	for each in range(b:rainbow_loaded)
+		call add(cluster_list, 'rainbow_r'.each)
+	endfor
+
+	exe 'syn cluster RainbowRegions contains='.join(cluster_list,',')
+
 	call rainbow#show()
 endfunc
 
