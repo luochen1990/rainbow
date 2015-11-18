@@ -104,6 +104,14 @@ func rainbow#load()
 			exe printf(def_rg, 'rainbow_r0', 'rainbow_p0 contained', containedin.',rainbow_r'.(maxlvl - 1), contains, paren)
 		endif
 	endfor
+
+	let cluster_list = []
+	for each in range(b:rainbow_loaded)
+		call add(cluster_list, 'rainbow_r'.each)
+	endfor
+
+	exe 'syn cluster RainbowRegions contains='.join(cluster_list,',')
+
 	call rainbow#show()
 endfunc
 
