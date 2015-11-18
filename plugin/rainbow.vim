@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.3.4
+"Script Version: 3.4.0
 "Author: luochen1990
-"Last Edited: 2015 June 15
+"Last Edited: 2015 Nov 19
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -104,13 +104,9 @@ func rainbow#load()
 			exe printf(def_rg, 'rainbow_r0', 'rainbow_p0 contained', containedin.',rainbow_r'.(maxlvl - 1), contains, paren)
 		endif
 	endfor
-
-	let cluster_list = []
-	for each in range(b:rainbow_loaded)
-		call add(cluster_list, 'rainbow_r'.each)
-	endfor
-
-	exe 'syn cluster RainbowRegions contains='.join(cluster_list,',')
+	exe 'syn cluster RainbowRegions contains='.join(map(range(maxlvl), '"rainbow_r".v:val'),',')
+	exe 'syn cluster RainbowParentheses contains='.join(map(range(maxlvl), '"rainbow_p".v:val'),',')
+	exe 'syn cluster RainbowOperators contains='.join(map(range(maxlvl), '"rainbow_o".v:val'),',')
 
 	call rainbow#show()
 endfunc
