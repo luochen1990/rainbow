@@ -76,9 +76,10 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	\}
 ```
 
+- 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
 - 'guifgs': GUI界面的括号颜色(将按顺序循环使用)
 - 'ctermfgs': 终端下的括号颜色(同上,插件将根据环境进行选择)
-- 'operators': 描述你希望哪些运算符跟着与它同级的括号一起高亮(见vim帮助 :syn-pattern)
+- 'operators': 描述你希望哪些运算符跟着与它同级的括号一起高亮(注意：留意需要转义的特殊字符，更多样例见[这里](https://github.com/luochen1990/rainbow/issues/3), 你也可以读[vim帮助 :syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
 - 'parentheses': 描述哪些模式将被当作括号处理,每一组括号由两个vim正则表达式描述
 - 'separately': 针对文件类型(由&ft决定)作不同的配置,未被单独设置的文件类型使用`*`下的配置,值为`0`表示仅对该类型禁用插件
 - 省略某个字段以使用默认设置

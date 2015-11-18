@@ -83,7 +83,7 @@ There is an example for advanced configuration(which i'm using), add it to your 
 
 - 'guifgs': colors for gui interface, will be used in order.
 - 'ctermfgs': colors for terms
-- 'operators': describe the operators you want to highlight(read the vim help :syn-pattern)
+- 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
 - 'parentheses': describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
 - 'separately': configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
 - keep a field empty to use the default setting.
