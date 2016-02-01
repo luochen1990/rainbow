@@ -73,6 +73,10 @@ func s:resolve_parenthesis(p)
 endfunc
 
 func rainbow#load()
+	if !exists('b:rainbow_conf')
+		call rainbow#hook()
+		return
+	endif
 	let conf = b:rainbow_conf
 	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 	for i in range(len(conf.parentheses))
@@ -148,11 +152,7 @@ func rainbow#toggle()
 	if exists('b:rainbow_loaded')
 		call rainbow#clear()
 	else
-		if exists('b:rainbow_conf')
-			call rainbow#load()
-		else
-			call rainbow#hook()
-		endif
+		call rainbow#load()
 	endif
 endfunc
 
