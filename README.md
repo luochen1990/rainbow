@@ -20,8 +20,8 @@ you can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/scri
 - no limit of parentheses levels. 
 - separately edit guifgs and ctermfgs (the colors used for highlighting)
 - now you can design your own parentheses  such as 'begin' and 'end'.
-- you can also configure anything seprately for different type of files. 
-- now you can even decide to let some operators (like + - * / , ==) hilighted with the parentheses together.
+- you can also configure anything separately for different type of files. 
+- now you can even decide to let some operators (like + - * / , ==) highlighted with the parentheses together.
 - json style configuration used, more understandable and readable, easier for advanced configuration.
 - the code is shorter and easier to be read now.
 - smoother and faster.
@@ -96,5 +96,5 @@ User Command:
 ------------------------------------------------------------------
 **Rate this script if you like it, 
 and i'll appreciate it and improve this plugin for you because of your support ! 
-just goto [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
+just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
  
