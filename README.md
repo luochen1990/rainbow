@@ -5,9 +5,9 @@ Rainbow Parentheses Improved
 Description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/master/README_zh.md)
 ---------------------------------------------------------------------------------------------------
 
-As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses(typically: lisp).
+As everyone knows, the most complex codes were composed of a mass of different kinds of parentheses (typically: lisp).
 This plugin will help you read these codes by showing different levels of parentheses in different colors.
-you can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/script.php?script_id=4176)**.
+You can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/script.php?script_id=4176)**.
 
 #### lisp
 ![lisp](https://raw.githubusercontent.com/luochen1990/rainbow/demo/lisp.png)
@@ -18,14 +18,14 @@ you can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/scri
 ### What is improved ? 
 
 - no limit of parentheses levels. 
-- separately edit guifgs and ctermfgs (the colors used for highlighting)
+- separately edit guifgs and ctermfgs (the colors used for highlighting).
 - now you can design your own parentheses  such as 'begin' and 'end'.
-- you can also configure anything separately for different type of files. 
-- now you can even decide to let some operators (like + - * / , ==) highlighted with the parentheses together.
+- you can also configure anything separately for different types of files. 
+- now you can even decide to let some operators (like + - * / , ==) hilighted with the parentheses together.
 - json style configuration used, more understandable and readable, easier for advanced configuration.
-- the code is shorter and easier to be read now.
+- the code is shorter and easier to read now.
 - smoother and faster.
-- the chinese document is added.
+- the Chinese document is added.
 
 ### Referenced: 
 - http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
@@ -54,7 +54,7 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 Configure:
 ----------
 
-There is an example for advanced configuration(which i'm using), add it to your vimrc and edit it as you wish(just keep the format).
+There is an example for advanced configuration (which I'm using), add it to your vimrc and edit it as you wish (just keep the format).
 
 ```vim
 	let g:rainbow_conf = {
@@ -82,10 +82,10 @@ There is an example for advanced configuration(which i'm using), add it to your 
 ```
 
 - 'guifgs': colors for gui interface, will be used in order.
-- 'ctermfgs': colors for terms
-- 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
-- 'parentheses': describe what will be processed as parentheses, a pair of parentheses was described by two re pattern
-- 'separately': configure for specific filetypes(decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files
+- 'ctermfgs': colors for terms.
+- 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern)).
+- 'parentheses': describe what will be processed as parentheses, a pair of parentheses was described by two re pattern.
+- 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files.
 - keep a field empty to use the default setting.
 
 User Command:
@@ -94,7 +94,6 @@ User Command:
 - **:RainbowToggle**		--you can use it to toggle this plugin.
 
 ------------------------------------------------------------------
-**Rate this script if you like it, 
-and i'll appreciate it and improve this plugin for you because of your support ! 
-just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
- 
+**Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!
+
+Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
