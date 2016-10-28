@@ -21,7 +21,7 @@ You can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/scri
 - separately edit guifgs and ctermfgs (the colors used for highlighting).
 - now you can design your own parentheses  such as 'begin' and 'end'.
 - you can also configure anything separately for different types of files. 
-- now you can even decide to let some operators (like + - * / , ==) hilighted with the parentheses together.
+- now you can even decide to let some operators (like + - * / , ==) highlighted with the parentheses together.
 - json style configuration used, more understandable and readable, easier for advanced configuration.
 - the code is shorter and easier to read now.
 - smoother and faster.
