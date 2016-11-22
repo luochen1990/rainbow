@@ -181,7 +181,7 @@ endif
 
 func rainbow#render()
     if (exists('g:rainbow_active') && g:rainbow_active)
-        execute 'RainbowToggleOn'
+        call rainbow#toggle()
     endif
 endfunc
 
