@@ -178,3 +178,11 @@ if (exists('g:rainbow_active') && g:rainbow_active)
 	auto syntax * call rainbow#hook()
 	auto colorscheme * call rainbow#show()
 endif
+
+func rainbow#render()
+    if (exists('g:rainbow_active') && g:rainbow_active)
+        execute 'RainbowToggleOn'
+    endif
+endfunc
+
+au BufWinEnter *.* call rainbow#render()
