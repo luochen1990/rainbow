@@ -185,4 +185,4 @@ func rainbow#render()
     endif
 endfunc
 
-au BufWinEnter *.* call rainbow#render()
+au SourceCmd *.* call rainbow#render()
