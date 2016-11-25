@@ -180,9 +180,16 @@ if (exists('g:rainbow_active') && g:rainbow_active)
 endif
 
 func rainbow#render()
+    source <amatch>
     if (exists('g:rainbow_active') && g:rainbow_active)
-        call rainbow#toggle()
+        call rainbow#clear()
+		if exists('b:rainbow_conf')
+			call rainbow#load()
+		else
+			call rainbow#hook()
+		endif
     endif
 endfunc
 
-au SourceCmd *.* call rainbow#render()
+au SourceCmd *.vim call rainbow#render()
+au SourceCmd *.vimrc call rainbow#render()
