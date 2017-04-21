@@ -1,8 +1,8 @@
 "==============================================================================
 "Script Title: rainbow parentheses improved
-"Script Version: 3.4.0
+"Script Version: 3.4.1
 "Author: luochen1990
-"Last Edited: 2015 Nov 19
+"Last Edited: 2017/04/21
 "Simple Configuration:
 "	first, put "rainbow.vim"(this file) to dir vimfiles/plugin or vim73/plugin
 "	second, add the follow sentences to your .vimrc or _vimrc :
@@ -174,7 +174,7 @@ func rainbow#hook()
 endfunc
 
 command! RainbowToggle call rainbow#toggle()
-command! RainbowToggleOn call rainbow#load()
+command! RainbowToggleOn call rainbow#hook()
 command! RainbowToggleOff call rainbow#clear()
 
 if (exists('g:rainbow_active') && g:rainbow_active)
