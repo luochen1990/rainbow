@@ -21,6 +21,9 @@ if exists('s:loaded') || !(exists('g:rainbow_active') || exists('g:rainbow_conf'
 	finish
 endif
 let s:loaded = 1
+if !exists("b:color_pattern")
+    let b:color_pattern = {}
+endif
 
 let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
