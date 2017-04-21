@@ -17,7 +17,7 @@
 "	:RainbowToggle		--you can use it to toggle this plugin.
 "==============================================================================
 
-if exists('s:loaded') || !(exists('g:rainbow_active') || exists('g:rainbow_conf'))
+if exists('s:loaded') || exists('g:rainbow_conf'))
 	finish
 endif
 let s:loaded = 1
