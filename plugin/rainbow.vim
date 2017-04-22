@@ -168,8 +168,47 @@ func rainbow#hook()
 	else
 		let separately = extend(copy(s:rainbow_conf.separately), exists('g:rainbow_conf.separately')? g:rainbow_conf.separately : {})
 	endif
-	let b_conf = has_key(separately, &ft)? separately[&ft] : separately['*']
-	if type(b_conf) == type({})
+
+	" Handle dotted file types by breaking the string into a list and looping
+	" over the items. See ':h ft' for dotted file types
+	let b_conf = {}   " Accumulated configuration for this buffer
+	let disabled = 0  " How many times rainbows have been disabled
+
+	for ft in split(&filetype, '\v\.')
+		if !has_key(separately, ft)
+			continue
+		endif
+
+		" If the entry is not a dictionary rainbows have been disabled
+		if type(separately[ft]) != type({})
+			let disabled += 1
+			continue
+		endif
+
+		" We merge the settings for all file types into one setting. If the
+		" key is already in 'b_conf' merge the settings, otherwise add a new
+		" item.
+		for [key, value] in items(separately[ft])
+			if has_key(b_conf, key)
+				" NOTE  Only lists and strings are supported
+				if type(value) == type([])
+					let b_conf[key] += value
+				elseif type(value) == type('')
+					let b_conf[key] .= value
+				endif
+			else
+				let b_conf[key] = value
+			endif
+		endfor
+	endfor
+
+	if empty(b_conf)
+		let b_conf = separately['*']
+	endif
+
+	" Proceed unless rainbows have been disabled for every single file type or
+	" b_conf is not a dictionary (can happen if separately['*'] is 0).
+	if disabled != len(split(&filetype, '\v\.')) && type(b_conf) == type({})
 		let b:rainbow_conf = extend(g_conf, b_conf)
 		call rainbow#load()
 	endif
