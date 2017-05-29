@@ -85,7 +85,7 @@ func rainbow#load()
 			let conf.parentheses[i] = op != ''? printf('start=#%s# step=%s end=#%s#', p[0], op, p[-1]) : printf('start=#%s# end=#%s#', p[0], p[-1])
 		endif
 	endfor
-	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
+	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s,@Spell %s'
 	let def_op = 'syn match %s %s containedin=%s contained'
 
 	call rainbow#clear()
