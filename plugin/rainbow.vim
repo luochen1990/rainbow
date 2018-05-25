@@ -53,6 +53,7 @@ let s:rainbow_conf = {
 \		'css': 0,
 \		'sh': {
 \			'parentheses': [['\(^\|\s\)\S*()\s*{\?\($\|\s\)','_^{_','}'], ['\(^\|\s\)if\($\|\s\)','_\(^\|\s\)\(then\|else\|elif\)\($\|\s\)_','\(^\|\s\)fi\($\|\s\)'], ['\(^\|\s\)for\($\|\s\)','_\(^\|\s\)\(do\|in\)\($\|\s\)_','\(^\|\s\)done\($\|\s\)'], ['\(^\|\s\)while\($\|\s\)','_\(^\|\s\)\(do\)\($\|\s\)_','\(^\|\s\)done\($\|\s\)'], ['\(^\|\s\)case\($\|\s\)','_\(^\|\s\)\(\S*)\|in\|;;\)\($\|\s\)_','\(^\|\s\)esac\($\|\s\)']],
+\			'after': ['syn clear shCondError'],
 \		},
 \	}
 \}
@@ -110,6 +111,7 @@ func rainbow#load()
 	exe 'syn cluster RainbowRegions contains='.join(map(range(maxlvl), '"rainbow_r".v:val'),',')
 	exe 'syn cluster RainbowParentheses contains='.join(map(range(maxlvl), '"rainbow_p".v:val'),',')
 	exe 'syn cluster RainbowOperators contains='.join(map(range(maxlvl), '"rainbow_o".v:val'),',')
+	if has_key(conf, 'after') | for cmd in conf.after | exe cmd | endfor | endif
 
 	call rainbow#show()
 endfunc
