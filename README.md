@@ -1,6 +1,6 @@
 Rainbow Parentheses Improved 
 ===
->	help you read complex code by showing diff level of parentheses in diff color !! 
+>	help you read complex code by showing diff level of parentheses in diff color !!
 
 Description [(这里有中文版)](https://github.com/luochen1990/rainbow/blob/master/README_zh.md)
 ---------------------------------------------------------------------------------------------------
@@ -15,19 +15,19 @@ You can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/scri
 ![html](https://raw.githubusercontent.com/luochen1990/rainbow/demo/html.png)
 #### [more](https://github.com/luochen1990/rainbow/blob/demo/more.md)
 
-### What is improved ? 
+### What is improved ?
 
-- no limit of parentheses levels. 
+- no limit of parentheses levels.
 - separately edit guifgs and ctermfgs (the colors used for highlighting).
 - now you can design your own parentheses  such as 'begin' and 'end'.
-- you can also configure anything separately for different types of files. 
+- you can also configure anything separately for different types of files.
 - now you can even decide to let some operators (like + - * / , ==) highlighted with the parentheses together.
 - json style configuration used, more understandable and readable, easier for advanced configuration.
 - the code is shorter and easier to read now.
 - smoother and faster.
 - the Chinese document is added.
 
-### Referenced: 
+### Referenced:
 - http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
 - http://www.vim.org/scripts/script.php?script_id=3772 (kien)
 
@@ -85,7 +85,7 @@ There is an example for advanced configuration (which I'm using), add it to your
 - 'ctermfgs': colors for terms.
 - 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern)).
 - 'parentheses': describe what will be processed as parentheses, a pair of parentheses was described by two re pattern.
-- 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files.
+- 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files, value `"default"` means keep the default shim for this filetype (notice: the default shim config will change between plugin version).
 - keep a field empty to use the default setting.
 
 User Command:
