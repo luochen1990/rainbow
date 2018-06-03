@@ -43,13 +43,22 @@ endfun
 
 fun rainbow_main#config()
 	let g = exists('g:rainbow_conf')? g:rainbow_conf : {}
+	"echom 'g:rainbow_conf:' string(g)
 	let s = get(g, 'separately', {})
+	"echom 'g:rainbow_conf.separately:' string(s)
 	let dft_conf = extend(copy(s:rainbow_conf), g) | unlet dft_conf.separately
-	let dx_conf = s:eq(get(s, '*', 0), 'default') ? 0 : s:rainbow_conf.separately['*']
+	"echom 'default config options:' string(dft_conf)
+	let dx_conf = s:rainbow_conf.separately['*']
+	"echom 'default star config:' string(dx_conf)
 	let ds_conf = get(s:rainbow_conf.separately, &ft, dx_conf)
+	"echom 'default separately config:' string(ds_conf)
 	let ux_conf = get(s, '*', ds_conf)
+	"echom 'user star config:' string(ux_conf)
 	let us_conf = get(s, &ft, ux_conf)
-	return s:eq(us_conf, 0) ? 0 : extend(dft_conf, s:eq(us_conf, 'default') ? ds_conf : us_conf)
+	"echom 'user separately config:' string(us_conf)
+	let conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
+	"echom 'almost finally config:' string(conf)
+	return s:eq(conf, 0) ? 0 : extend(dft_conf, conf)
 endfun
 
 fun rainbow_main#load()
