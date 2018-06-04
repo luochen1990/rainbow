@@ -42,7 +42,16 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 ```
 
 ### Manually:
-- first, put `rainbow.vim`(this file) to dir `~/.vim/plugin` or `vimfiles/plugin`
+
+- first, execute the following commands (for windows users, use `~/vimfiles` instead of `~/.vim`)
+
+	```sh
+	git clone https://github.com/luochen1990/rainbow.git
+	cd rainbow
+	cp plugin/* ~/.vim/plugin
+	cp autoload/* ~/.vim/autoload
+	```
+
 - second, add the follow sentences to your `.vimrc` or `_vimrc` :
 
 	```vim

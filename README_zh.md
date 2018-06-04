@@ -39,11 +39,22 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 ```
 
 ### 手动安装:
-- 首先，将下载到的`rainbow.vim`文件放到`vimfiles/plugin`文件夹（在linux系统里是`~/.vim/plugin`文件夹）中。 
-- 然后，将以下句子，加入到你的vim配置文件中（windows下配置文件是`_vimrc`，而linux下是`.vimrc`） 
+
+- 首先，执行以下命令 (Windows用户需要使用 `~/vimfiles` 替代 `~/.vim`) 。
+
+	```sh
+	git clone https://github.com/luochen1990/rainbow.git
+	cd rainbow
+	cp plugin/* ~/.vim/plugin
+	cp autoload/* ~/.vim/autoload
+	```
+
+- 然后，将以下句子，加入到你的vim配置文件中（windows下配置文件是`_vimrc`，而linux下是`.vimrc`）
+
 	```vim
 	let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	```
+
 - 最后，重新启动你的vim，你就可以享受coding了。
 
 高级配置：
