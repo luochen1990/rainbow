@@ -22,6 +22,7 @@ You can also find this plugin in **[www.vim.org](http://www.vim.org/scripts/scri
 - now you can design your own parentheses  such as 'begin' and 'end'.
 - you can also configure anything separately for different types of files.
 - now you can even decide to let some operators (like + - * / , ==) highlighted with the parentheses together.
+- dot separated combined filetype support (`:h ft`).
 - json style configuration used, more understandable and readable, easier for advanced configuration.
 - the code is shorter and easier to read now.
 - smoother and faster.

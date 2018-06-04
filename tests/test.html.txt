@@ -5,3 +5,4 @@
   </div>
 </html>
 
+<!-- vim: set ft=html.txt : -->

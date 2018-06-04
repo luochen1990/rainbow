@@ -13,14 +13,16 @@
 ![html](https://raw.githubusercontent.com/luochen1990/rainbow/demo/html.png)
 #### [more](https://github.com/luochen1990/rainbow/blob/demo/more.md)
 
-### 有哪些改进？ 
+### 有哪些改进？
+
 - 更快速和流畅的体验。
 - 简短,高质量,并且易读的源代码。
 - 现在的版本将不再限制括号的嵌套层数。 
 - 现在你可以分别自定义图形界面下和终端上所使用的各种括号颜色。
 - 现在你可以自定义括号的形式，不过在这之前你最好了解vim脚本的正则表达式。
-- 现在你甚至可以为不同类型的文件设定不同的配置。 
-- 现在你甚至可以决定是否让某些符号跟着它们所在的括号一起高亮，你也可以对不同类型的文件分别设置。 
+- 现在你甚至可以为不同类型的文件设定不同的配置。
+- 现在你甚至可以决定是否让某些符号跟着它们所在的括号一起高亮，你也可以对不同类型的文件分别设置。
+- 支持点分隔的复合文件类型 (`:h ft`)
 - 现在采用json风格的配置文件,更加可读,更易于进行高级配置。
 - 最后但并非不重要的一点是，如你所见，现在增加了中文说明。
 
@@ -28,7 +30,7 @@
 - http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
 - http://www.vim.org/scripts/script.php?script_id=3772 (kien)
 
-安装说明： 
+安装说明:
 ---------
 
 ### 使用Vundle安装:
@@ -57,7 +59,7 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 - 最后，重新启动你的vim，你就可以享受coding了。
 
-高级配置：
+高级配置:
 ---------
 
 以下是一个配置的样例（也是我在用的配置），将它加入到你的vimrc并按照你喜欢的方式修改它（但是保持格式）你就可以精确地控制插件的行为了。

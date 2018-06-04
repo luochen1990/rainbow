@@ -1,5 +1,4 @@
 let s:rainbow_conf = {
-\	'syn_name_prefix': 'rainbow',
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
 \	'operators': '_,_',
@@ -47,7 +46,7 @@ fun s:eq(x, y)
 	return type(a:x) == type(a:y) && a:x == a:y
 endfun
 
-fun rainbow_main#config()
+fun rainbow_main#gen_config(ft)
 	let g = exists('g:rainbow_conf')? g:rainbow_conf : {}
 	"echom 'g:rainbow_conf:' string(g)
 	let s = get(g, 'separately', {})
@@ -56,33 +55,39 @@ fun rainbow_main#config()
 	"echom 'default config options:' string(dft_conf)
 	let dx_conf = s:rainbow_conf.separately['*']
 	"echom 'default star config:' string(dx_conf)
-	let ds_conf = get(s:rainbow_conf.separately, &ft, dx_conf)
+	let ds_conf = get(s:rainbow_conf.separately, a:ft, dx_conf)
 	"echom 'default separately config:' string(ds_conf)
 	let ux_conf = get(s, '*', ds_conf)
 	"echom 'user star config:' string(ux_conf)
-	let us_conf = get(s, &ft, ux_conf)
+	let us_conf = get(s, a:ft, ux_conf)
 	"echom 'user separately config:' string(us_conf)
 	let conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
 	"echom 'almost finally config:' string(conf)
-	return s:eq(conf, 0) ? 0 : extend(dft_conf, conf)
+	return s:eq(conf, 0) ? 0 : extend(extend({'syn_name_prefix': a:ft.'Rainbow'}, dft_conf), conf)
+endfun
+
+fun rainbow_main#gen_configs(ft)
+	return filter(map(split(a:ft, '\v\.'), 'rainbow_main#gen_config(v:val)'), 'type(v:val) == type({})')
 endfun
 
 fun rainbow_main#load()
-	if !exists('b:rainbow_conf') | let b:rainbow_conf = rainbow_main#config() | endif
-	if type(b:rainbow_conf) != type({}) | return | endif
-	call rainbow#syn(b:rainbow_conf)
-	call rainbow#hi(b:rainbow_conf)
-	let b:rainbow_loaded = 1
+	let b:rainbow_confs = rainbow_main#gen_configs(&ft)
+	for conf in b:rainbow_confs
+		call rainbow#syn(conf)
+		call rainbow#hi(conf)
+	endfor
 endfun
 
 fun rainbow_main#clear()
-	call rainbow#hi_clear(b:rainbow_conf)
-	call rainbow#syn_clear(b:rainbow_conf)
-	let b:rainbow_loaded = 0
+	for conf in b:rainbow_confs
+		call rainbow#hi_clear(conf)
+		call rainbow#syn_clear(conf)
+	endfor
+	unlet b:rainbow_confs
 endfun
 
 fun rainbow_main#toggle()
-	if exists('b:rainbow_loaded') && b:rainbow_loaded == 1
+	if exists('b:rainbow_confs')
 		call rainbow_main#clear()
 	else
 		call rainbow_main#load()
