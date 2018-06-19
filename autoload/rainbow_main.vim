@@ -63,7 +63,7 @@ fun rainbow_main#gen_config(ft)
 	"echom 'user separately config:' string(us_conf)
 	let conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
 	"echom 'almost finally config:' string(conf)
-	return s:eq(conf, 0) ? 0 : extend(extend({'syn_name_prefix': substitute(a:ft, '\v\A(\a)', '\u\1', 'g').'Rainbow'}, dft_conf), conf)
+	return s:eq(conf, 0) ? 0 : extend(extend({'syn_name_prefix': substitute(a:ft, '\v\A+(\a)', '\u\1', 'g').'Rainbow'}, dft_conf), conf)
 endfun
 
 fun rainbow_main#gen_configs(ft)
