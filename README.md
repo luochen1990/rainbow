@@ -107,3 +107,5 @@ User Command:
 **Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!
 
 Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
+
+Happy opensource contribution...!
