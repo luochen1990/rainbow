@@ -18,7 +18,6 @@ let s:rainbow_conf = {
 \		},
 \		'vim': {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-\			'guis': ['bold', ''],
 \		},
 \		'xml': {
 \			'syn_name_prefix': 'xmlRainbow',
