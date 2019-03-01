@@ -21,7 +21,7 @@ endfun
 fun rainbow#syn(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
-	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
+	let cycle = conf.cycle
 	for i in range(len(conf.parentheses))
 		let p = conf.parentheses[i]
 		if type(p) == type([])
@@ -32,36 +32,35 @@ fun rainbow#syn(config)
 	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
 	let def_op = 'syn match %s %s containedin=%s contained'
 
-	let b:rainbow_loaded = maxlvl
+	let b:rainbow_loaded = cycle
 	for parenthesis_args in conf.parentheses
 		let [paren, containedin, contains, op] = s:resolve_parenthesis(parenthesis_args)
 		if op == '' |let op = conf.operators |endif
-		for lvl in range(maxlvl)
+		for lvl in range(cycle)
 			if len(op) > 0 && op !~ '^..\s*$' |exe printf(def_op, prefix.'_o'.lvl, op, prefix.'_r'.lvl) |endif
 			if lvl == 0
 				if containedin == ''
-					exe printf(def_rg, prefix.'_r0', prefix.'_p0', prefix.'_r'.(maxlvl - 1), contains, paren)
+					exe printf(def_rg, prefix.'_r0', prefix.'_p0', prefix.'_r'.(cycle - 1), contains, paren)
 				endif
 			else
-				exe printf(def_rg, prefix.'_r'.lvl, prefix.'_p'.lvl.(' contained'), prefix.'_r'.((lvl + maxlvl - 1) % maxlvl), contains, paren)
+				exe printf(def_rg, prefix.'_r'.lvl, prefix.'_p'.lvl.(' contained'), prefix.'_r'.((lvl + cycle - 1) % cycle), contains, paren)
 			endif
 		endfor
 		if containedin != ''
-			exe printf(def_rg, prefix.'_r0', prefix.'_p0 contained', containedin.','.prefix.'_r'.(maxlvl - 1), contains, paren)
+			exe printf(def_rg, prefix.'_r0', prefix.'_p0 contained', containedin.','.prefix.'_r'.(cycle - 1), contains, paren)
 		endif
 	endfor
-	exe 'syn cluster '.prefix.'Regions contains='.join(map(range(maxlvl), '"'.prefix.'_r".v:val'),',')
-	exe 'syn cluster '.prefix.'Parentheses contains='.join(map(range(maxlvl), '"'.prefix.'_p".v:val'),',')
-	exe 'syn cluster '.prefix.'Operators contains='.join(map(range(maxlvl), '"'.prefix.'_o".v:val'),',')
+	exe 'syn cluster '.prefix.'Regions contains='.join(map(range(cycle), '"'.prefix.'_r".v:val'),',')
+	exe 'syn cluster '.prefix.'Parentheses contains='.join(map(range(cycle), '"'.prefix.'_p".v:val'),',')
+	exe 'syn cluster '.prefix.'Operators contains='.join(map(range(cycle), '"'.prefix.'_o".v:val'),',')
 	if has_key(conf, 'after') | for cmd in conf.after | exe cmd | endfor | endif
 endfun
 
 fun rainbow#syn_clear(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
-	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 
-	for id in range(maxlvl)
+	for id in range(conf.cycle)
 		exe 'syn clear '.prefix.'_r'.id
 		exe 'syn clear '.prefix.'_o'.id
 	endfor
@@ -70,22 +69,23 @@ endfun
 fun rainbow#hi(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
-	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 
-	for id in range(maxlvl)
+	for id in range(conf.cycle)
 		let ctermfg = conf.ctermfgs[id % len(conf.ctermfgs)]
 		let guifg = conf.guifgs[id % len(conf.guifgs)]
-		exe 'hi '.prefix.'_p'.id.' ctermfg='.ctermfg.' guifg='.guifg
-		exe 'hi '.prefix.'_o'.id.' ctermfg='.ctermfg.' guifg='.guifg
+		let cterm = conf.cterms[id % len(conf.cterms)]
+		let gui = conf.guis[id % len(conf.guis)]
+		let hi_style = ' ctermfg='.ctermfg.' guifg='.guifg.(len(cterm) > 0 ? ' cterm='.cterm : '').(len(gui) > 0 ? ' gui='.gui : '')
+		exe 'hi '.prefix.'_p'.id.hi_style
+		exe 'hi '.prefix.'_o'.id.hi_style
 	endfor
 endfun
 
 fun rainbow#hi_clear(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
-	let maxlvl = has('gui_running')? len(conf.guifgs) : len(conf.ctermfgs)
 
-	for id in range(maxlvl)
+	for id in range(conf.cycle)
 		exe 'hi clear '.prefix.'_p'.id
 		exe 'hi clear '.prefix.'_o'.id
 	endfor

@@ -1,6 +1,8 @@
 let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
+\	'guis': [''],
+\	'cterms': [''],
 \	'operators': '_,_',
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
@@ -16,6 +18,7 @@ let s:rainbow_conf = {
 \		},
 \		'vim': {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+\			'guis': ['bold', ''],
 \		},
 \		'xml': {
 \			'syn_name_prefix': 'xmlRainbow',
@@ -46,6 +49,20 @@ fun s:eq(x, y)
 	return type(a:x) == type(a:y) && a:x == a:y
 endfun
 
+fun s:gcd(a, b)
+	let [a, b, t] = [a:a, a:b, 0]
+	while b != 0
+		let t = b
+		let b = a % b
+		let a = t
+	endwhile
+	return a
+endfun
+
+fun s:lcm(a, b)
+	return (a:a / s:gcd(a:a, a:b)) * a:b
+endfun
+
 fun rainbow_main#gen_config(ft)
 	let g = exists('g:rainbow_conf')? g:rainbow_conf : {}
 	"echom 'g:rainbow_conf:' string(g)
@@ -61,9 +78,15 @@ fun rainbow_main#gen_config(ft)
 	"echom 'user star config:' string(ux_conf)
 	let us_conf = get(s, a:ft, ux_conf)
 	"echom 'user separately config:' string(us_conf)
-	let conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
-	"echom 'almost finally config:' string(conf)
-	return s:eq(conf, 0) ? 0 : extend(extend({'syn_name_prefix': substitute(a:ft, '\v\A+(\a)', '\u\1', 'g').'Rainbow'}, dft_conf), conf)
+	let af_conf = (s:eq(us_conf, 'default') ? ds_conf : us_conf)
+	"echom 'almost finally config:' string(af_conf)
+	if s:eq(af_conf, 0)
+		return 0
+	else
+		let conf = extend(extend({'syn_name_prefix': substitute(a:ft, '\v\A+(\a)', '\u\1', 'g').'Rainbow'}, dft_conf), af_conf)
+		let conf.cycle = has('gui_running')? s:lcm(len(conf.guifgs), len(conf.guis)) : s:lcm(len(conf.ctermfgs), len(conf.cterm))
+		return conf
+	endif
 endfun
 
 fun rainbow_main#gen_configs(ft)
