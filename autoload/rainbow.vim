@@ -37,7 +37,7 @@ fun rainbow#syn(config)
 		let [paren, containedin, contains, op] = s:resolve_parenthesis(parenthesis_args)
 		if op == '' |let op = conf.operators |endif
 		for lvl in range(maxlvl)
-			if op != '' |exe printf(def_op, prefix.'_o'.lvl, op, prefix.'_r'.lvl) |endif
+			if len(op) > 0 && op !~ '^..\s*$' |exe printf(def_op, prefix.'_o'.lvl, op, prefix.'_r'.lvl) |endif
 			if lvl == 0
 				if containedin == ''
 					exe printf(def_rg, prefix.'_r0', prefix.'_p0', prefix.'_r'.(maxlvl - 1), contains, paren)
