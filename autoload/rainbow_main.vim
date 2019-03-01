@@ -93,7 +93,7 @@ fun rainbow_main#gen_configs(ft)
 endfun
 
 fun rainbow_main#load()
-	let b:rainbow_confs = rainbow_main#gen_configs(&ft)
+	let b:rainbow_confs = rainbow_main#gen_configs(&filetype)
 	for conf in b:rainbow_confs
 		call rainbow#syn(conf)
 		call rainbow#hi(conf)
