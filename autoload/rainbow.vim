@@ -1,54 +1,60 @@
 if exists('s:loaded') | finish | endif | let s:loaded = 1
 
-fun s:resolve_parenthesis(p)
-	let ls = split(a:p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
-	let [paren, containedin, contains, op] = ['', '', 'TOP', '']
+fun s:trim(s)
+	return substitute(a:s, '\v^\s*(.{-})\s*$', '\1', '')
+endfun
+
+fun s:concat(strs)
+	return join(filter(a:strs, "v:val !~ '^[ ]*$'"), ',')
+endfun
+
+fun s:resolve_parenthesis_with(init_state, p)
+	let [paren, contained, containedin, contains, op] = a:init_state
+	let p = (type(a:p) == type([])) ? ((len(a:p) == 3) ? printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) : printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) : a:p "NOTE: preprocess the old style parentheses config
+
+	let ls = split(p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
 	for s in ls
-		let [k, v] = [matchstr(s, '^[^=]\+\ze='), matchstr(s, '^[^=]\+=\zs.*')]
+		let [k, v] = [matchstr(s, '^[^=]\+\ze\(=\|$\)'), matchstr(s, '^[^=]\+=\zs.*')]
 		if k == 'step'
 			let op = v
 		elseif k == 'contains'
-			let contains = v
+			let contains = s:trim(v)
 		elseif k == 'containedin'
-			let containedin = v
+			let containedin = s:trim(v)
+		elseif k == 'contained'
+			let contained = v:true
 		else
 			let paren .= s
 		endif
 	endfor
-	return [paren, containedin, contains, op]
+	"echom json_encode([paren, contained, containedin, contains, op])
+	return [paren, contained, containedin, contains, op]
+endfun
+
+fun s:resolve_parenthesis_from_config(config)
+	return s:resolve_parenthesis_with(['', v:false, '', 'TOP', a:config.operators], a:config.parentheses_options)
 endfun
 
 fun rainbow#syn(config)
 	let conf = a:config
 	let prefix = conf.syn_name_prefix
 	let cycle = conf.cycle
-	for i in range(len(conf.parentheses))
-		let p = conf.parentheses[i]
-		if type(p) == type([])
-			let op = len(p)==3? p[1] : has_key(conf, 'operators')? conf.operators : ''
-			let conf.parentheses[i] = op != ''? printf('start=#%s# step=%s end=#%s#', p[0], op, p[-1]) : printf('start=#%s# end=#%s#', p[0], p[-1])
-		endif
-	endfor
 	let def_rg = 'syn region %s matchgroup=%s containedin=%s contains=%s %s'
 	let def_op = 'syn match %s %s containedin=%s contained'
 
+	let glob_paran_opts = s:resolve_parenthesis_from_config(conf)
 	let b:rainbow_loaded = cycle
 	for parenthesis_args in conf.parentheses
-		let [paren, containedin, contains, op] = s:resolve_parenthesis(parenthesis_args)
-		if op == '' |let op = conf.operators |endif
-		for lvl in range(cycle)
-			if len(op) > 0 && op !~ '^..\s*$' |exe printf(def_op, prefix.'_o'.lvl, op, prefix.'_r'.lvl) |endif
-			if lvl == 0
-				if containedin == ''
-					exe printf(def_rg, prefix.'_r0', prefix.'_p0', prefix.'_r'.(cycle - 1), contains, paren)
-				endif
+		let [paren, contained, containedin, contains, op] = s:resolve_parenthesis_with(glob_paran_opts, parenthesis_args)
+		for lv in range(cycle)
+			let lv2 = ((lv + cycle - 1) % cycle)
+			if len(op) > 0 && op !~ '^..\s*$' |exe printf(def_op, prefix.'_o'.lv, op, prefix.'_r'.lv) |endif
+			if lv == 0
+				exe printf(def_rg, prefix.'_r0', prefix.'_p0'.(contained? ' contained' : ''), s:concat([containedin, prefix.'_r'.(cycle - 1)]), contains, paren)
 			else
-				exe printf(def_rg, prefix.'_r'.lvl, prefix.'_p'.lvl.(' contained'), prefix.'_r'.((lvl + cycle - 1) % cycle), contains, paren)
+				exe printf(def_rg, prefix.'_r'.lv, prefix.'_p'.lv.(' contained'), prefix.'_r'.lv2, contains, paren)
 			endif
 		endfor
-		if containedin != ''
-			exe printf(def_rg, prefix.'_r0', prefix.'_p0 contained', containedin.','.prefix.'_r'.(cycle - 1), contains, paren)
-		endif
 	endfor
 	exe 'syn cluster '.prefix.'Regions contains='.join(map(range(cycle), '"'.prefix.'_r".v:val'),',')
 	exe 'syn cluster '.prefix.'Parentheses contains='.join(map(range(cycle), '"'.prefix.'_p".v:val'),',')
