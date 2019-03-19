@@ -4,7 +4,7 @@ let s:rainbow_conf = {
 \	'guis': [''],
 \	'cterms': [''],
 \	'operators': '_,_',
-\	'parentheses_options': 'step=_,_',
+\	'parentheses_options': '',
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
 \		'*': {},
