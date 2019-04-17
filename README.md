@@ -91,10 +91,13 @@ There is an example for advanced configuration (which I'm using), add it to your
 	\}
 ```
 
-- 'guifgs': colors for gui interface, will be used in order.
-- 'ctermfgs': colors for terms.
+- 'guifgs': a list of `guifg` (`:h highlight-guifg`), i.e. colors for gui interface, will be used in order
+- 'guis': a list of `gui` (`:h highlight-gui`), will be used in order
+- 'ctermfgs': a list of `ctermfg` (`:h highlight-ctermfg`)
+- 'cterms': a list of `cterm` (`:h highlight-cterm`)
 - 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern)).
-- 'parentheses': describe what will be processed as parentheses, a pair of parentheses was described by two re pattern.
+- 'parentheses': a list of parentheses definitions, a parentheses definition contains parts like `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`, see `:h syntax` for more details.
+- 'parentheses_options': parentheses options shared between different parentheses, things like `containedin=xxxFuncBody`, `contains=@Spell` (or 'contains=@NoSpell') often appears here.
 - 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files, value `"default"` means keep the default shim for this filetype (notice: the default shim config will change between plugin version).
 - keep a field empty to use the default setting.
 
