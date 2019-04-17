@@ -1,3 +1,5 @@
+" Copyright 2013 LuoChen (luochen1990@gmail.com). Licensed under the Apache License 2.0.
+
 let s:rainbow_conf = {
 \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 \	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
