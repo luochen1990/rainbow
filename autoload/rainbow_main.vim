@@ -10,6 +10,10 @@ let s:rainbow_conf = {
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
 \		'*': {},
+\		'javascript': {
+\			'parentheses_options': 'containedin=jsFuncBlock',
+\			'after': ['syn clear jsParen', 'syn clear jsParens'],
+\		},
 \		'lisp': {
 \			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 \		},
