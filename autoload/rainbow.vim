@@ -24,7 +24,7 @@ fun s:resolve_parenthesis_with(init_state, p)
 		elseif k == 'containedin'
 			let containedin = s:trim(v)
 		elseif k == 'contained'
-			let contained = v:true
+			let contained = 1
 		else
 			let paren .= s
 		endif
@@ -34,7 +34,7 @@ fun s:resolve_parenthesis_with(init_state, p)
 endfun
 
 fun s:resolve_parenthesis_from_config(config)
-	return s:resolve_parenthesis_with(['', v:false, '', 'TOP', a:config.operators], a:config.parentheses_options)
+	return s:resolve_parenthesis_with(['', 0, '', 'TOP', a:config.operators], a:config.parentheses_options)
 endfun
 
 fun s:synID(prefix, group, lv, id)
