@@ -91,7 +91,7 @@ let g:rainbow_conf = {
 \			'parentheses_options': 'containedin=vimFuncBody', "enable rainbow inside vim function body
 \		},
 \		'perl': {
-\			'syn_name_prefix': 'perlBlockFoldRainbow', #solve the [perl indent-depending-on-syntax problem](https://github.com/luochen1990/rainbow/issues/20)
+\			'syn_name_prefix': 'perlBlockFoldRainbow', "solve the [perl indent-depending-on-syntax problem](https://github.com/luochen1990/rainbow/issues/20)
 \		},
 \		'stylus': {
 \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], "[vim css color](https://github.com/ap/vim-css-color) compatibility
