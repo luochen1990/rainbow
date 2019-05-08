@@ -25,7 +25,7 @@ let s:rainbow_conf = {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
 \		},
 \		'vim': {
-\			'parentheses_options': 'containedin=vimFuncBody',
+\			'parentheses_options': 'containedin=vimFuncBody,vimExecute',
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold'],
 \		},
 \		'xml': {
