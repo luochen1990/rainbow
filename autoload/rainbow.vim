@@ -11,7 +11,7 @@ fun s:concat(strs)
 endfun
 
 fun s:resolve_parenthesis_with(init_state, p)
-	let [paren, contained, containedin, contains, op] = a:init_state
+	let [paren, contained, containedin, contains_prefix, contains, op] = a:init_state
 	let p = (type(a:p) == type([])) ? ((len(a:p) == 3) ? printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) : printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) : a:p "NOTE: preprocess the old style parentheses config
 
 	let ls = split(p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
@@ -19,6 +19,8 @@ fun s:resolve_parenthesis_with(init_state, p)
 		let [k, v] = [matchstr(s, '^[^=]\+\ze\(=\|$\)'), matchstr(s, '^[^=]\+=\zs.*')]
 		if k == 'step'
 			let op = s:trim(v)
+		elseif k == 'contains_prefix'
+			let contains_prefix = s:trim(v)
 		elseif k == 'contains'
 			let contains = s:concat([contains, s:trim(v)])
 		elseif k == 'containedin'
@@ -29,13 +31,13 @@ fun s:resolve_parenthesis_with(init_state, p)
 			let paren .= s
 		endif
 	endfor
-	let rst = [paren, contained, containedin, contains, op]
+	let rst = [paren, contained, containedin, contains_prefix, contains, op]
 	"echom json_encode(rst)
 	return rst
 endfun
 
 fun s:resolve_parenthesis_from_config(config)
-	return s:resolve_parenthesis_with(['', 0, '', a:config.contains_prefix, a:config.operators], a:config.parentheses_options)
+	return s:resolve_parenthesis_with(['', 0, '', a:config.contains_prefix, '', a:config.operators], a:config.parentheses_options)
 endfun
 
 fun s:synID(prefix, group, lv, id)
@@ -54,7 +56,7 @@ fun rainbow#syn(config)
 	let glob_paran_opts = s:resolve_parenthesis_from_config(conf)
 	let b:rainbow_loaded = cycle
 	for id in range(len(conf.parentheses))
-		let [paren, contained, containedin, contains, op] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
+		let [paren, contained, containedin, contains_prefix, contains, op] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
 		for lv in range(cycle)
 			let lv2 = ((lv + cycle - 1) % cycle)
 			let [rid, pid, gid2] = [s:synID(prefix, 'r', lv, id), s:synID(prefix, 'p', lv, id), s:synGroupID(prefix, 'Regions', lv2)]
@@ -63,9 +65,10 @@ fun rainbow#syn(config)
 				exe 'syn match '.s:synID(prefix, 'o', lv, id).' '.op.' containedin='.s:synID(prefix, 'r', lv, id).' contained'
 			endif
 
-			let real_containedin = (lv == 0)? s:concat([containedin, '@'.gid2]) : '@'.gid2
 			let real_contained = (lv == 0)? (contained? 'contained ' : '') : 'contained '
-			exe 'syn region '.rid.' matchgroup='.pid.' containedin='.real_containedin.' contains='.contains.' '.real_contained.paren
+			let real_containedin = (lv == 0)? s:concat([containedin, '@'.gid2]) : '@'.gid2
+			let real_contains = s:concat([contains_prefix, contains])
+			exe 'syn region '.rid.' matchgroup='.pid.' '.real_contained.'containedin='.real_containedin.' contains='.real_contains.' '.paren
 		endfor
 	endfor
 	for lv in range(cycle)
