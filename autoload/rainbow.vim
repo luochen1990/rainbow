@@ -20,9 +20,9 @@ fun s:resolve_parenthesis_with(init_state, p)
 		if k == 'step'
 			let op = s:trim(v)
 		elseif k == 'contains'
-			let contains = s:trim(v)
+			let contains = s:concat([contains, s:trim(v)])
 		elseif k == 'containedin'
-			let containedin = s:trim(v)
+			let containedin = s:concat([containedin, s:trim(v)])
 		elseif k == 'contained'
 			let contained = 1
 		else
@@ -35,7 +35,7 @@ fun s:resolve_parenthesis_with(init_state, p)
 endfun
 
 fun s:resolve_parenthesis_from_config(config)
-	return s:resolve_parenthesis_with(['', 0, '', 'TOP', a:config.operators], a:config.parentheses_options)
+	return s:resolve_parenthesis_with(['', 0, '', a:config.contains_prefix, a:config.operators], a:config.parentheses_options)
 endfun
 
 fun s:synID(prefix, group, lv, id)

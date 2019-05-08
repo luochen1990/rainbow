@@ -6,6 +6,7 @@ let s:rainbow_conf = {
 \	'guis': [''],
 \	'cterms': [''],
 \	'operators': '_,_',
+\	'contains_prefix': 'TOP',
 \	'parentheses_options': '',
 \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 \	'separately': {
