@@ -20,6 +20,9 @@ let s:rainbow_conf = {
 \		'haskell': {
 \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
 \		},
+\		'ocaml': {
+\			'parentheses': ['start=/(\ze[^*]/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\[|/ end=/|\]/ fold', 'start=/{/ end=/}/ fold'],
+\		},
 \		'tex': {
 \			'parentheses_options': 'containedin=texDocZone',
 \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
