@@ -1,6 +1,9 @@
 " Copyright 2013 LuoChen (luochen1990@gmail.com). Licensed under the Apache License 2.0.
 
-if exists('s:loaded') || !(exists('g:rainbow_active') || exists('g:rainbow_conf')) | finish | endif | let s:loaded = 1
+if exists('s:loaded') || !(exists('g:rainbow_active') || exists('g:rainbow_conf'))
+  finish
+endif
+let s:loaded = 1
 
 command! RainbowToggle call rainbow_main#toggle()
 command! RainbowToggleOn call rainbow_main#load()
