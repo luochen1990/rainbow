@@ -49,7 +49,7 @@ let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowTo
 	```sh
 	git clone https://github.com/luochen1990/rainbow.git
 	cd rainbow
-	mkdir -p ~/.vim/plugin
+	mkdir -p ~/.vim/plugin ~/.vim/autoload
 	cp plugin/* ~/.vim/plugin
 	cp autoload/* ~/.vim/autoload
 	```
