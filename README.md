@@ -172,7 +172,7 @@ Troubleshooting
 
 The following keymappings will help you to check the syntax name and definitions under the cursor, add them to your vimrc and restart vim:
 
-```
+```vim
 nnoremap <f1> :echo synIDattr(synID(line('.'), col('.'), 0), 'name')<cr>
 nnoremap <f2> :echo ("hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
