@@ -54,6 +54,7 @@ let s:rainbow_conf = {
 \		},
 \		'css': 0,
 \		'sh': 0,
+\		'vimwiki': 0,
 \	}
 \}
 
