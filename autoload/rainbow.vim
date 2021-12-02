@@ -63,9 +63,13 @@ fun rainbow#syn(config)
 	for id in range(len(conf.parentheses))
 		let [paren, contained, containedin, contains_prefix, contains, op, kind, upkind] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
 		let kind = split(kind, ',')
-		if kind == [] | let kind = [''] | endif
+		if kind == []
+		   	let kind = ['']
+	   	endif
 		for k in kind
-			if !has_key(kindlist, k) | let kindlist[k] = [] | endif
+			if !has_key(kindlist, k)
+			   	let kindlist[k] = []
+		   	endif
 			call add(kindlist[k], id)
 		endfor
 		let upkind = split(upkind, ',', 1)->extend(kind)->uniq()

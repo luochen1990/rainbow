@@ -46,8 +46,8 @@ let s:rainbow_conf = {
 \		},
 \		'zsh': {
 \			'parentheses': ['start=/((/ end=/))/ kind=arithQuote upkind=,', 'start=/\v\(\ze($|[^(])/ end=/)/',
-\				'start=/(/ end=/)/ contained containedin=zshMathSubst kind=innerArith upkind=arithQuote',
-\				'start=/\$\zs((/ end=/))/ contained containedin=zshMathSubst kind=innerArith upkind=arithQuote',
+\				'start=/(/ end=/)/ contained containedin=zshMathSubst upkind=arithQuote',
+\				'start=/\$\zs((/ end=/))/ contained containedin=zshMathSubst upkind=arithQuote',
 \				'start=/\V[[/ end=/]]/', 'start=/\v\[\ze($|[^[])/ end=/]/',
 \				'start=/{/ end=/}/']
 \		},
