@@ -1,3 +1,5 @@
+[==[ Long bracket string 1... ]==]
+
 (function(args)
     lst = { a=function(arg) print("hello") end,
              b=(1+2)*3/4,
@@ -7,6 +9,5 @@
     (function() return 0 end)()] = 1
 end)("blah")
 
-[[
-Special lua string...
-]]
+[[ Long bracket string 2 ]]
+

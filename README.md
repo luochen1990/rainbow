@@ -184,6 +184,6 @@ nnoremap <f4> :exec 'syn list '.synIDattr(synID(line('.'), col('.'), 0), 'name')
 Move your cursor to a parentheses and press the keys to use them.
 
 ------------------------------------------------------------------
-**Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!
+**Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!**
 
-Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
+**Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**

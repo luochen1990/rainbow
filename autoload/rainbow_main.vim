@@ -42,7 +42,14 @@ let s:rainbow_conf = {
 \			'parentheses': ['start=/\v\<((script|style|area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 \		},
 \		'lua': {
-\			'parentheses': ["start=/(/ end=/)/", "start=/{/ end=/}/", "start=/\\v\\[\\ze($|[^[])/ end=/\\]/"],
+\			'parentheses': ['start=/(/ end=/)/', 'start=/{/ end=/}/', 'start=/\v\[\ze($|!(\=*\[))/ end=/\]/'],
+\		},
+\		'zsh': {
+\			'parentheses': ['start=/((/ end=/))/ kind=arithQuote upkind=,', 'start=/\v\(\ze($|[^(])/ end=/)/',
+\				'start=/(/ end=/)/ contained containedin=zshMathSubst kind=innerArith upkind=arithQuote',
+\				'start=/\$\zs((/ end=/))/ contained containedin=zshMathSubst kind=innerArith upkind=arithQuote',
+\				'start=/\V[[/ end=/]]/', 'start=/\v\[\ze($|[^[])/ end=/]/',
+\				'start=/{/ end=/}/']
 \		},
 \		'perl': {
 \			'syn_name_prefix': 'perlBlockFoldRainbow',
