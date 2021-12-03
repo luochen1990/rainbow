@@ -45,11 +45,13 @@ let s:rainbow_conf = {
 \			'parentheses': ['start=/(/ end=/)/', 'start=/{/ end=/}/', 'start=/\v\[\ze($|!(\=*\[))/ end=/\]/'],
 \		},
 \		'zsh': {
-\			'parentheses': ['start=/((/ end=/))/ kind=arithQuote upkind=,', 'start=/\v\(\ze($|[^(])/ end=/)/',
-\				'start=/(/ end=/)/ contained containedin=zshMathSubst upkind=arithQuote',
-\				'start=/\$\zs((/ end=/))/ contained containedin=zshMathSubst upkind=arithQuote',
+\			'parentheses': [
+\				'start=/\v\(\ze($|[^(])/ end=/)/',
+\				'start=/((/ end=/))/ kind=arithQuote upkind=,',
+\				'start=/\$((/ end=/))/ kind=arithQuote upkind=,arithInner',
+\				'start=/(/ end=/)/ contained kind=arithInner upkind=arithQuote',
 \				'start=/\V[[/ end=/]]/', 'start=/\v\[\ze($|[^[])/ end=/]/',
-\				'start=/{/ end=/}/']
+\				'start=/{/ end=/}/'],
 \		},
 \		'perl': {
 \			'syn_name_prefix': 'perlBlockFoldRainbow',

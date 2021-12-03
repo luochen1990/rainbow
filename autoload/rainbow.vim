@@ -28,9 +28,9 @@ fun s:resolve_parenthesis_with(init_state, p)
 		elseif k == 'contained'
 			let contained = 1
 		elseif k == 'kind'
-			let kind = v
+			let kind = s:trim(v)
 		elseif k == 'upkind'
-			let upkind = v
+			let upkind = s:trim(v)
 		else
 			let paren .= s
 		endif
@@ -62,17 +62,14 @@ fun rainbow#syn(config)
 	let kindlist = {}
 	for id in range(len(conf.parentheses))
 		let [paren, contained, containedin, contains_prefix, contains, op, kind, upkind] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
-		let kind = split(kind, ',')
-		if kind == []
-		   	let kind = ['']
-	   	endif
+		let kind = kind == '' ? [''] : split(kind, ',', 1)->uniq()
+		let upkind = (upkind == '' ? [] : split(upkind, ',', 1))->extend(kind)->uniq()
 		for k in kind
 			if !has_key(kindlist, k)
-			   	let kindlist[k] = []
-		   	endif
+				let kindlist[k] = []
+			endif
 			call add(kindlist[k], id)
 		endfor
-		let upkind = split(upkind, ',', 1)->extend(kind)->uniq()
 		for lv in range(cycle)
 			let uplv = ((lv + cycle - 1) % cycle)
 			let [rid, pid, upid] = [s:synID(prefix, 'r', lv, id), s:synID(prefix, 'p', lv, id), upkind->mapnew('"@".s:synGroupID(prefix, "Regions", uplv, v:val)')->join(',')]
