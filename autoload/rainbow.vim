@@ -12,19 +12,23 @@ endfun
 
 fun s:resolve_parenthesis_with(init_state, p)
 	let [paren, contained, containedin, contains_prefix, contains, op] = a:init_state
-	let p = (type(a:p) == type([])) ? ((len(a:p) == 3) ? printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) : printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) : a:p "NOTE: preprocess the old style parentheses config
+	let p = (type(a:p) == type([])) ?
+				\ ((len(a:p) == 3) ?
+				\     printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) :
+				\     printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) :
+				\ a:p "NOTE: preprocess the old style parentheses config
 
 	let ls = split(p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
 	for s in ls
-		let [k, v] = [matchstr(s, '^[^=]\+\ze\(=\|$\)'), matchstr(s, '^[^=]\+=\zs.*')]
+		let [k, v] = [s:trim(matchstr(s, '^[^=]\+\ze\(=\|$\)')), s:trim(matchstr(s, '^[^=]\+=\zs.*'))]
 		if k == 'step'
-			let op = s:trim(v)
+			let op = v
 		elseif k == 'contains_prefix'
-			let contains_prefix = s:trim(v)
+			let contains_prefix = v
 		elseif k == 'contains'
-			let contains = s:concat([contains, s:trim(v)])
+			let contains = s:concat([contains, v])
 		elseif k == 'containedin'
-			let containedin = s:concat([containedin, s:trim(v)])
+			let containedin = s:concat([containedin, v])
 		elseif k == 'contained'
 			let contained = 1
 		else
