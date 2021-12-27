@@ -17,7 +17,7 @@
 
 - 更快速和流畅的体验。
 - 简短,高质量,并且易读的源代码。
-- 现在的版本将不再限制括号的嵌套层数。 
+- 现在的版本将不再限制括号的嵌套层数。
 - 现在你可以分别自定义图形界面下和终端上所使用的各种括号颜色。
 - 现在你可以自定义括号的形式，不过在这之前你最好了解vim脚本的正则表达式。
 - 现在你甚至可以为不同类型的文件设定不同的配置。
@@ -26,7 +26,7 @@
 - 现在采用json风格的配置文件,更加可读,更易于进行高级配置。
 - 最后但并非不重要的一点是，如你所见，现在增加了中文说明。
 
-### 以下是本插件所参考的旧版本： 
+### 以下是本插件所参考的旧版本：
 - http://www.vim.org/scripts/script.php?script_id=1561 (Martin Krischik)
 - http://www.vim.org/scripts/script.php?script_id=3772 (kien)
 
@@ -94,9 +94,15 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 - 'ctermfgs': 一个`ctermfg`的列表 (`:h highlight-ctermfg`), 即终端下的括号颜色
 - 'cterms': 一个`cterm`的列表 (`:h highlight-cterm`)
 - 'operators': 描述你希望哪些运算符跟着与它同级的括号一起高亮(注意：留意需要转义的特殊字符，更多样例见[这里](https://github.com/luochen1990/rainbow/issues/3), 你也可以读[vim帮助 :syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern))
-- 'parentheses': 一个关于括号定义的列表, 每一个括号的定义包含形如以下的部分:  `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`. 各个部分具体含义可参考 `:h syntax`, 其中 `step` 为本插件的扩展定义, 表示括号中间需要高亮的运算符.
+- 'parentheses': 一个关于括号定义的列表, 其中的每个项目描述了一种括号, 具体的语法见[parentheses的语法]()
 - 'separately': 针对文件类型(由&ft决定)作不同的配置,未被单独设置的文件类型使用`*`下的配置,值为`0`表示仅对该类型禁用插件,值为`"default"`表示使用针对该类型的默认兼容配置 (注意, 默认兼容配置可能随着该插件版本的更新而改变, 如果你不希望它改变, 那么你应该将它拷贝一份放到你的vimrc文件里).
 - 省略某个字段以使用默认设置
+
+#### `parentheses`的语法
+
+每一种括号的定义包含形如以下的部分:  `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`, `cluster=someNames`. 其中, `start`, `stop`, `fold`, `contained`, `containedin` 和 `contains` 的具体含义可参考 `:h syntax`; `step` 和 `cluster` 为本插件的扩展定义. `step` 是一个正则, 匹配括号中间需要高亮的运算符. `cluster` 是一个用逗号分隔的列表 (和 `containedin` 类似), 指定了这种括号所属的括号组, 默认的括号组名称为 `default`, 也可以将它显式放在括号组名称的列表中.
+
+在 `contains` 和 `containein` 中可以用 `#name` 的形式引用一个括号组, 这样相互嵌套的括号就会严格按照嵌套层次来高亮. 如果想要在某种或者某组括号里使用顶层的高亮, 可以使用为括号组生成的语法元素的名字.
 
 -------------------------------------------------------------------
 **最后，如果你喜欢这个插件，给它一个评价，我会心存感激，并且因为你的肯定继续改进这个插件！（从[该页面](http://www.vim.org/scripts/script.php?script_id=4176)下方，选择`Life Changing`选项，然后点击`rate`）**
