@@ -85,6 +85,7 @@ let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 	\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
 	\		},
 	\		'css': 0,
+	\		'nerdtree': 0, "NERDTree與Rainbow會衝突，產生多餘的括號
 	\	}
 	\}
 ```

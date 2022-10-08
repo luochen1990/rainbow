@@ -98,6 +98,7 @@ let g:rainbow_conf = {
 \			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'], "[vim css color](https://github.com/ap/vim-css-color) compatibility
 \		},
 \		'css': 0, "disable this plugin for css files
+\		'nerdtree': 0, "rainbow is conflicting with NERDTree, creating extra parentheses
 \	}
 \}
 ```
