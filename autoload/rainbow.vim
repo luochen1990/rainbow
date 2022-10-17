@@ -11,41 +11,47 @@ fun s:concat(strs)
 endfun
 
 fun s:resolve_parenthesis_with(init_state, p)
-	let [paren, contained, containedin, contains_prefix, contains, op] = a:init_state
-	let p = (type(a:p) == type([])) ? ((len(a:p) == 3) ? printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) : printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) : a:p "NOTE: preprocess the old style parentheses config
+	let [paren, contained, containedin, contains_prefix, contains, op, cluster] = a:init_state
+	let p = (type(a:p) == type([])) ?
+				\ ((len(a:p) == 3) ?
+				\     printf('start=#%s# step=%s end=#%s#', a:p[0], op, a:p[-1]) :
+				\     printf('start=#%s# end=#%s#', a:p[0], a:p[-1])) :
+				\ a:p "NOTE: preprocess the old style parentheses config
 
 	let ls = split(p, '\v%(%(start|step|end)\=(.)%(\1@!.)*\1[^ ]*|\w+%(\=[^ ]*)?) ?\zs', 0)
 	for s in ls
-		let [k, v] = [matchstr(s, '^[^=]\+\ze\(=\|$\)'), matchstr(s, '^[^=]\+=\zs.*')]
+		let [k, v] = [s:trim(matchstr(s, '^[^=]\+\ze\(=\|$\)')), s:trim(matchstr(s, '^[^=]\+=\zs.*'))]
 		if k == 'step'
-			let op = s:trim(v)
+			let op = v
 		elseif k == 'contains_prefix'
-			let contains_prefix = s:trim(v)
+			let contains_prefix = v
 		elseif k == 'contains'
-			let contains = s:concat([contains, s:trim(v)])
+			let contains = s:concat([contains, v])
 		elseif k == 'containedin'
-			let containedin = s:concat([containedin, s:trim(v)])
+			let containedin = s:concat([containedin, v])
 		elseif k == 'contained'
 			let contained = 1
+		elseif k == 'cluster'
+			let cluster = s:concat([cluster, v])
 		else
 			let paren .= s
 		endif
 	endfor
-	let rst = [paren, contained, containedin, contains_prefix, contains, op]
+	let rst = [paren, contained, containedin, contains_prefix, contains, op, cluster]
 	"echom json_encode(rst)
 	return rst
 endfun
 
 fun s:resolve_parenthesis_from_config(config)
-	return s:resolve_parenthesis_with(['', 0, '', a:config.contains_prefix, '', a:config.operators], a:config.parentheses_options)
+	return s:resolve_parenthesis_with(['', 0, '', a:config.contains_prefix, '', a:config.operators, ''], a:config.parentheses_options)
 endfun
 
 fun s:synID(prefix, group, lv, id)
 	return a:prefix.'_lv'.a:lv.'_'.a:group.a:id
 endfun
 
-fun s:synGroupID(prefix, group, lv)
-	return a:prefix.a:group.'_lv'.a:lv
+fun s:synGroupID(prefix, group, lv, cluster)
+	return a:prefix.a:group.'_lv'.a:lv.'_'.a:cluster
 endfun
 
 fun rainbow#syn(config)
@@ -55,31 +61,53 @@ fun rainbow#syn(config)
 
 	let glob_paran_opts = s:resolve_parenthesis_from_config(conf)
 	let b:rainbow_loaded = cycle
+	let cluster_list = {}
 	for id in range(len(conf.parentheses))
-		let [paren, contained, containedin, contains_prefix, contains, op] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
+		let [paren, contained, containedin, contains_prefix, contains, op, cluster] = s:resolve_parenthesis_with(glob_paran_opts, conf.parentheses[id])
+
+		let cluster = split(cluster, ',') ?? ['default']
+		for k in cluster
+			let cluster_list[k] = get(cluster_list, k, [])->add(id)
+		endfor
+		let containedin_items = split(containedin, ',')
+		let upcluster = filter(copy(containedin_items), 'v:val =~ "#.*"')->map('v:val[1:]') ?? cluster
+		let containedin = filter(containedin_items, 'v:val !~ "#.*"')->join(',')
+		let contains_items = (contains_prefix != '' ? [contains_prefix] : []) + split(contains, ',')
+
 		for lv in range(cycle)
-			let lv2 = ((lv + cycle - 1) % cycle)
-			let [rid, pid, gid2] = [s:synID(prefix, 'r', lv, id), s:synID(prefix, 'p', lv, id), s:synGroupID(prefix, 'Regions', lv2)]
+			let uplv = ((lv + cycle - 1) % cycle)
+			let [rid, pid, upid] = [s:synID(prefix, 'r', lv, id), s:synID(prefix, 'p', lv, id),
+						\ mapnew(upcluster, '"@".s:synGroupID(prefix, "Regions", uplv, v:val)')->join(',')]
 
 			if len(op) > 2
 				exe 'syn match '.s:synID(prefix, 'o', lv, id).' '.op.' containedin='.s:synID(prefix, 'r', lv, id).' contained'
 			endif
 
 			let real_contained = (lv == 0)? (contained? 'contained ' : '') : 'contained '
-			let real_containedin = (lv == 0)? s:concat([containedin, '@'.gid2]) : '@'.gid2
-			let real_contains = s:concat([contains_prefix, contains])
-			exe 'syn region '.rid.' matchgroup='.pid.' '.real_contained.'containedin='.real_containedin.' contains='.real_contains.' '.paren
+			let real_containedin = (lv == 0)? s:concat([containedin, upid]) : upid
+			let real_contains = mapnew(contains_items,
+						\     'v:val =~ "#.*" ? "@".s:synGroupID(prefix, "Regions", uplv, v:val[1:]) : v:val')
+						\ ->flatten()->join(',')
+			let real_contains = real_contains != '' ? ' contains='.real_contains : ''
+			exe 'syn region '.rid.' matchgroup='.pid.' '.real_contained.'containedin='.real_containedin.real_contains.' '.paren
 		endfor
 	endfor
-	for lv in range(cycle)
-		exe 'syn cluster '.s:synGroupID(prefix, 'Regions', lv).' contains='.join(map(range(len(conf.parentheses)), 's:synID(prefix, "r", lv, v:val)'), ',')
-		exe 'syn cluster '.s:synGroupID(prefix, 'Parentheses', lv).' contains='.join(map(range(len(conf.parentheses)), 's:synID(prefix, "p", lv, v:val)'), ',')
-		exe 'syn cluster '.s:synGroupID(prefix, 'Operators', lv).' contains='.join(map(range(len(conf.parentheses)), 's:synID(prefix, "o", lv, v:val)'), ',')
+
+	for [kind, abbr] in [['Regions', 'r'], ['Parentheses', 'p'], ['Operators', 'o']]
+		for [cluster, ids] in items(cluster_list)
+			for lv in range(cycle)
+				exe 'syn cluster '.s:synGroupID(prefix, kind, lv, cluster).' contains='.
+							\ mapnew(ids, 's:synID(prefix, abbr, lv, v:val)')->join(',')
+			endfor
+			exe 'syn cluster '.prefix.kind.'_'.cluster.' contains='.
+						\ map(range(cycle), '"@".s:synGroupID(prefix, kind, v:val, cluster)')->join(',')
+		endfor
+		exe 'syn cluster '.prefix.kind.' contains='.map(keys(cluster_list), 'prefix.kind."_".v:val')->join(',')
 	endfor
-	exe 'syn cluster '.prefix.'Regions contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Regions", v:val)'), ',')
-	exe 'syn cluster '.prefix.'Parentheses contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Parentheses", v:val)'), ',')
-	exe 'syn cluster '.prefix.'Operators contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Operators", v:val)'), ',')
-	if has_key(conf, 'after') | for cmd in conf.after | exe cmd | endfor | endif
+
+	for cmd in conf->get('after', [])
+		exe cmd
+	endfor
 endfun
 
 fun rainbow#syn_clear(config)

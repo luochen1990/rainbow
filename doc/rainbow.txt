@@ -1,6 +1,8 @@
 Rainbow Parentheses Improved                                     *rainbow*
 ==========================================================================
 
+Detailed document is in the README.
+
 Commands:                                               *rainbow-commands*
 --------------------------------------------------------------------------
 
