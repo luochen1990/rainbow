@@ -1,7 +1,5 @@
 " Copyright 2013 LuoChen (luochen1990@gmail.com). Licensed under the Apache License 2.0.
 
-if exists('s:loaded') | finish | endif | let s:loaded = 1
-
 fun s:trim(s)
 	return substitute(a:s, '\v^\s*(.{-})\s*$', '\1', '')
 endfun
