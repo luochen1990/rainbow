@@ -39,28 +39,17 @@ Install
 
 ```vim
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 ```
 
 #### install manually:
 
-- first, execute the following commands (for windows users, use `~/vimfiles` instead of `~/.vim`)
+```sh
+git clone --depth=1 https://github.com/luochen1990/rainbow.git ~/.vim/pack/rainbow
+```
 
-	```sh
-	git clone https://github.com/luochen1990/rainbow.git
-	cd rainbow
-	mkdir -p ~/.vim/plugin ~/.vim/autoload
-	cp plugin/* ~/.vim/plugin
-	cp autoload/* ~/.vim/autoload
-	```
-
-- second, add the follow sentences to your `.vimrc` or `_vimrc` :
-
-	```vim
-	let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
-	```
-
-- third, restart your vim and enjoy coding.
+```vim
+packadd rainbow
+```
 
 Configure
 ---------
