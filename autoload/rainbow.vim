@@ -1,6 +1,9 @@
 " Copyright 2013 LuoChen (luochen1990@gmail.com). Licensed under the Apache License 2.0.
 
-if exists('s:loaded') | finish | endif | let s:loaded = 1
+if exists('s:loaded')
+  finish
+endif
+let s:loaded = 1
 
 fun s:trim(s)
 	return substitute(a:s, '\v^\s*(.{-})\s*$', '\1', '')
@@ -79,7 +82,11 @@ fun rainbow#syn(config)
 	exe 'syn cluster '.prefix.'Regions contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Regions", v:val)'), ',')
 	exe 'syn cluster '.prefix.'Parentheses contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Parentheses", v:val)'), ',')
 	exe 'syn cluster '.prefix.'Operators contains='.join(map(range(cycle), '"@".s:synGroupID(prefix, "Operators", v:val)'), ',')
-	if has_key(conf, 'after') | for cmd in conf.after | exe cmd | endfor | endif
+	if has_key(conf, 'after')
+      for cmd in conf.after
+        exe cmd
+      endfor
+    endif
 endfun
 
 fun rainbow#syn_clear(config)

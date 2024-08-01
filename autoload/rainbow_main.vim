@@ -118,7 +118,9 @@ fun rainbow_main#load()
 endfun
 
 fun rainbow_main#clear()
-	if !exists('b:rainbow_confs') | return | endif
+	if !exists('b:rainbow_confs')
+      return
+    endif
 	for conf in b:rainbow_confs
 		call rainbow#hi_clear(conf)
 		call rainbow#syn_clear(conf)
