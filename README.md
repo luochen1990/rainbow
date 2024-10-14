@@ -1,4 +1,4 @@
-Rainbow Parentheses Improved 
+Rainbow Parentheses Improved
 ===
 >	help you read complex code by showing diff level of parentheses in diff color !!
 
@@ -108,7 +108,7 @@ let g:rainbow_conf = {
 - 'ctermfgs': a list of `ctermfg` (`:h highlight-ctermfg`)
 - 'cterms': a list of `cterm` (`:h highlight-cterm`)
 - 'operators': describe the operators you want to highlight (note: be careful about special characters which needs escaping, you can find more examples [here](https://github.com/luochen1990/rainbow/issues/3), and you can also read the [vim help about syn-pattern](http://vimdoc.sourceforge.net/htmldoc/syntax.html#:syn-pattern)). note that this option will be overwritten by the `step` part of `parentheses`.
-- 'parentheses': a list of parentheses definitions, a parentheses definition contains parts like `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`, see `:h syntax` for more details. notice that the `step` part is defined by this plugin so it is not described by the official vim doc.
+- 'parentheses': a list of parentheses definitions, see [syntax-for-parentheses-definition]().
 - 'parentheses_options': parentheses options shared between different parentheses, things like `containedin=xxxFuncBody`, `contains=@Spell` (or 'contains=@NoSpell') often appears here. this option is often used to solve [3rd-party-plugin-compatibility]() problems.
 - 'separately': configure for specific filetypes (decided by &ft), key `*` for filetypes without separate configuration, value `0` means disable rainbow only for this type of files, value `"default"` means keep the default shim for this filetype (notice: the default shim config will change between plugin version).
 - 'syn_name_prefix': add a prefix to name of the syntax definition, this option is often used to solve [3rd-party-plugin-compatibility]() problems.
@@ -117,10 +117,18 @@ let g:rainbow_conf = {
 
 To get more advanced config examples, try to search throught this [tag](https://github.com/luochen1990/rainbow/issues?utf8=%E2%9C%93&q=label%3A%22config+reference%22+).
 
+#### Syntax for `parentheses` definition
+
+A parentheses definition defines a kind of parentheses and contains parts like `start=/(/`, `step=/,/`, `stop=/)/`, `fold`, `contained`, `containedin=someSynNames`, `contains=@Spell`, and `cluster=someNames`, see `:h syntax` for more details for parts except `step` and `cluster`. The content of `step` is a regex matching the operators within the parentheses that should be highlighted; `cluster` is a comma-separated list (just like `containein`) specifying the parenthesis clusters the kind of parentheses, whose default value is `default`, and `default` can also be explicitly specified in the `cluster` list.
+
+Parenthesis clusters can be referred to in `contains` and `containedin` with the form `#name`, thus the nesting parentheses would be highlighted strictly according to their nesting levels. If you want to use top-level highlight for some parentheses, specify the syntax cluster names rainbow generated for the parentheses clusters instead.
+
 User Command
 ------------
 
-- **:RainbowToggle**		--you can use it to toggle this plugin.
+- **:RainbowToggle**		-- you can use it to toggle this plugin on and off.
+- **:RainbowToggleOn**		-- turn this plugin on.
+- **:RainbowToggleOff**		-- turn this plugin off
 
 3rd Party Plugin Compatibility
 ------------------------------
@@ -185,6 +193,6 @@ nnoremap <f4> :exec 'syn list '.synIDattr(synID(line('.'), col('.'), 0), 'name')
 Move your cursor to a parentheses and press the keys to use them.
 
 ------------------------------------------------------------------
-**Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!
+**Rate this script if you like it, and I'll appreciate it and improve this plugin for you because of your support!**
 
-Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
+**Just go to [this page](http://www.vim.org/scripts/script.php?script_id=4176) and choose `Life Changing` and click `rate`**
